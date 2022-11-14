@@ -5,59 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    android:padding="20dp"
+    android:padding="50dp"
     tools:context=".CardActivity" >
 
-    <ImageView
-        android:id="@+id/cardIVCardFront"
+    <TextView
+        android:id="@+id/cardTVCardFront"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:onClick="cardFlip"
-        android:background="#fd97e2"
-        android:contentDescription="FRONT IMAGE OF A WORD CARD"
+        android:background="@color/design_default_color_primary"
+        android:gravity="center"
+        android:text="@string/card_card_front"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
-        android:id="@+id/cardIVCardBack"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:onClick="cardFlip"
-        android:background="#93c47d"
-        android:contentDescription="BACK IMAGE OF A WORD CARD"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
-    <TextView
-        android:id="@+id/cardTVCardFront"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:textAlignment="center"
-        android:text="@string/card_card_front"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:background="#BF3030"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
     <TextView
         android:id="@+id/cardTVCardBack"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:textAlignment="center"
         android:text="@string/card_card_back"
         android:textColor="#000000"
         android:textStyle="bold"
-        android:background="#326314"
+        android:background="@color/design_default_color_secondary"
+        android:gravity="center"
+        android:alpha="0"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
