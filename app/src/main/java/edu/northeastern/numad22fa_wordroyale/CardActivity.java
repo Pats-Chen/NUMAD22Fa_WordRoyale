@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class CardActivity extends AppCompatActivity {
@@ -17,7 +18,7 @@ public class CardActivity extends AppCompatActivity {
     private TextView cardBackTV;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
 
@@ -25,32 +26,10 @@ public class CardActivity extends AppCompatActivity {
         scale = getApplicationContext().getResources().getDisplayMetrics().density;
         cardFrontTV = findViewById(R.id.cardTVCardFront);
         cardFrontTV.setVisibility(View.VISIBLE);
-        cardFrontTV.setOnClickListener(view -> {
-            if (isFront) {
-                textFrontAnimatorSet.setTarget(cardFrontTV);
-                textBackAnimatorSet.setTarget(cardBackTV);
-                textFrontAnimatorSet.start();
-                textBackAnimatorSet.start();
-                cardFrontTV.setVisibility(View.GONE);
-                cardBackTV.setVisibility(View.VISIBLE);
-                isFront = false;
-            }
-        });
+        cardFrontTV.setCameraDistance(8000 * scale);
+
         cardBackTV = findViewById(R.id.cardTVCardBack);
         cardBackTV.setVisibility(View.GONE);
-        cardBackTV.setOnClickListener(view -> {
-            if (!isFront) {
-                textFrontAnimatorSet.setTarget(cardBackTV);
-                textBackAnimatorSet.setTarget(cardFrontTV);
-                textFrontAnimatorSet.start();
-                textBackAnimatorSet.start();
-                cardBackTV.setVisibility(View.GONE);
-                cardFrontTV.setVisibility(View.VISIBLE);
-                isFront = true;
-            }
-        });
-
-        cardFrontTV.setCameraDistance(8000 * scale);
         cardBackTV.setCameraDistance(8000 * scale);
 
         textFrontAnimatorSet = new AnimatorSet();
@@ -60,15 +39,26 @@ public class CardActivity extends AppCompatActivity {
     }
 
     public void cardFrontToBack(View v) {
-
+        if (isFront) {
+            textFrontAnimatorSet.setTarget(cardFrontTV);
+            textBackAnimatorSet.setTarget(cardBackTV);
+            textFrontAnimatorSet.start();
+            textBackAnimatorSet.start();
+            cardFrontTV.setVisibility(View.GONE);
+            cardBackTV.setVisibility(View.VISIBLE);
+            isFront = false;
+        }
     }
 
     public void cardBackToFront(View v) {
-
-    }
-
-    public void cardFlip(View v) {
-
-
+        if (!isFront) {
+            textFrontAnimatorSet.setTarget(cardBackTV);
+            textBackAnimatorSet.setTarget(cardFrontTV);
+            textFrontAnimatorSet.start();
+            textBackAnimatorSet.start();
+            cardBackTV.setVisibility(View.GONE);
+            cardFrontTV.setVisibility(View.VISIBLE);
+            isFront = true;
+        }
     }
 }

@@ -29,4 +29,9 @@ public class MainActivity extends AppCompatActivity {
         Intent loginActivityIntent = new Intent(this, LoginActivity.class);
         startActivity(loginActivityIntent);
     }
+
+    public void cardListActivity(View v) {
+        Intent cardListActivityIntent = new Intent(this, CardListActivity.class);
+        startActivity(cardListActivityIntent);
+    }
 }
