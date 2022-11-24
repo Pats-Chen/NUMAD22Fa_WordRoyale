@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "641918369127",
+    "project_id": "numad22fa-wordroyale",
+    "storage_bucket": "numad22fa-wordroyale.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641918369127:android:d106072c668751ae8043c2",
+        "android_client_info": {
+          "package_name": "edu.northeastern.numad22fa_wordroyale"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "641918369127-rcniitamoi514bnvljsrmktc0efgs7hu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmrdstuLWaZBLQsxE8qRTl3ScBr1FVCiY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "641918369127-rcniitamoi514bnvljsrmktc0efgs7hu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

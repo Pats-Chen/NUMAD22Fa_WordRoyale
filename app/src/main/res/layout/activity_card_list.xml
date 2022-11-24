@@ -8,8 +8,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cardListRV"
-        android:layout_width="409dp"
-        android:layout_height="729dp"
+        android:layout_width="410dp"
+        android:layout_height="730dp"
         tools:layout_editor_absoluteY="1dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
