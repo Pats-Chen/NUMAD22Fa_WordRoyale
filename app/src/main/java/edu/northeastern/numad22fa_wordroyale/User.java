@@ -1,23 +1,24 @@
 package edu.northeastern.numad22fa_wordroyale;
 
-
-
 public class User {
-    private String userID;
-    private String username;
+    private String userEmail;
     private String password;
 
     public User() {
 
     }
 
-    public User(String username, String password) {
-        this.username = username;
+    public User(String userEmail, String password) {
+        this.userEmail = userEmail;
         this.password = password;
     }
 
-    public String getUsername() {
-        return this.username;
+//    public String getUserID() {
+//        return this.userID;
+//    }
+
+    public String getUserEmail() {
+        return this.userEmail;
     }
 
     public String getPassword() {

@@ -8,13 +8,37 @@
     tools:context=".MainActivity" >
 
     <TextView
-        android:id="@+id/main_about"
+        android:id="@+id/mainAbout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Word Royale!\nJiazhe Chen"
+        android:text="Word Royale!"
         android:textColor="#ffffff"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/mainUserEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/mainUserEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email:-"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/mainAbout"
+        app:layout_constraintBottom_toTopOf="@+id/mainPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/mainPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password:-"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/mainUserEmail"
         app:layout_constraintBottom_toTopOf="@+id/mainButtonLoginActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -27,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:onClick="loginActivity"
-        app:layout_constraintTop_toBottomOf="@+id/main_about"
+        app:layout_constraintTop_toBottomOf="@+id/mainPassword"
         app:layout_constraintBottom_toTopOf="@+id/mainButtonCardActivity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,6 +80,20 @@
         android:layout_margin="20dp"
         android:onClick="cardListActivity"
         app:layout_constraintTop_toBottomOf="@+id/mainButtonCardActivity"
+        app:layout_constraintBottom_toTopOf="@+id/mainButtonLogout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cornerRadius="15dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mainButtonLogout"
+        android:text="LOG OUT"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:onClick="logout"
+        app:layout_constraintTop_toBottomOf="@+id/mainButtonCardListActivity"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
