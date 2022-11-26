@@ -23,9 +23,7 @@ import java.util.List;
 public class CardListActivity extends AppCompatActivity {
     private RecyclerView cardListRV;
     private CardAdapter cardListAdapter;
-    private List<String> cardIDList;
-    private List<String> cardFrontList;
-    private List<String> cardBackList;
+    private List<Card> cardList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,27 +32,20 @@ public class CardListActivity extends AppCompatActivity {
 
         cardListRV = findViewById(R.id.cardListRV);
 
-        cardIDList = new ArrayList<>();
-        cardFrontList = new ArrayList<>();
-        cardBackList = new ArrayList<>();
+        cardList = new ArrayList<>();
 
-        cardListAdapter = new CardAdapter(this, cardIDList, cardFrontList, cardBackList);
+        cardListAdapter = new CardAdapter(this, cardList);
         cardListRV.setAdapter(cardListAdapter);
         cardListRV.setLayoutManager(new LinearLayoutManager(this));
     }
 
     public class CardAdapter extends RecyclerView.Adapter<CardViewHolder> {
         private Context context;
-        private List<String> cardIDList;
-        private List<String> cardFrontList;
-        private List<String> cardBackList;
+        private List<Card> cardList;
 
-        CardAdapter(Context context, List<String> cardIDList, List<String> cardFrontList,
-                    List<String> cardBackList) {
+        CardAdapter(Context context, List<Card> cardList) {
             this.context = context;
-            this.cardIDList = cardIDList;
-            this.cardFrontList = cardFrontList;
-            this.cardBackList = cardBackList;
+            this.cardList = cardList;
         }
 
         @NonNull
@@ -67,22 +58,22 @@ public class CardListActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
-            holder.cardID.setText(String.valueOf(cardIDList.get(position)));
-            holder.cardFrontTV.setText(String.valueOf(cardFrontList.get(position)));
-            holder.cardBackTV.setText(String.valueOf(cardBackList.get(position)));
-            holder.cardID.setOnClickListener(view -> {
+            holder.cardID.setText(cardList.get(position).getCardID());
+            holder.cardFrontTV.setText(cardList.get(position).getCardFront());
+            holder.cardBackTV.setText(cardList.get(position).getCardBack());
+            holder.itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(context, CardActivity.class);
                 Bundle cardBundle = new Bundle();
-                cardBundle.putString("CARD ID", cardIDList.get(position));
-                cardBundle.putString("CARD FRONT", cardFrontList.get(position));
-                cardBundle.putString("CARD BACK", cardBackList.get(position));
+                cardBundle.putString("CARD ID", cardList.get(position).getCardID());
+                cardBundle.putString("CARD FRONT", cardList.get(position).getCardFront());
+                cardBundle.putString("CARD BACK", cardList.get(position).getCardBack());
                 context.startActivity(intent);
             });
         }
 
         @Override
         public int getItemCount() {
-            return cardIDList.size();
+            return cardList.size();
         }
     }
 
@@ -97,15 +88,6 @@ public class CardListActivity extends AppCompatActivity {
             cardID = itemView.findViewById(R.id.cardListItemID);
             cardFrontTV = itemView.findViewById(R.id.cardListItemFront);
             cardBackTV = itemView.findViewById(R.id.cardListItemBack);
-
-            itemView.setOnClickListener(view -> {
-//                if (recyclerViewInterface != null) {
-//                    int position = getAbsoluteAdapterPosition();
-//                    if (position != RecyclerView.NO_POSITION) {
-//                        recyclerViewInterface.onLinkClick(position);
-//                    }
-//                }
-            });
         }
     }
 }
