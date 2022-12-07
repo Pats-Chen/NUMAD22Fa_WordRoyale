@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                             Log.e(TAG, "createUserWithEmail:success");
                             Toast.makeText(LoginActivity.this, "Authentication succeeded.", Toast.LENGTH_SHORT).show();
                             User newUser = new User(userEmail, password);
+                            newUser.setUserUID(userAuth.getCurrentUser().getUid());
                             rootRef.child("users")
                                     .child(Objects.requireNonNull(userAuth.getCurrentUser()).getUid())
                                     .setValue(newUser)
@@ -77,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // TODO: prompt user already exists.
                             Log.e(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Authentication failed. Password should be at least 6 characters.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

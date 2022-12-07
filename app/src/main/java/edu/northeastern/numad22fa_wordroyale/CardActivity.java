@@ -16,6 +16,7 @@ public class CardActivity extends AppCompatActivity {
     private boolean isFront;
     private TextView cardFrontTV;
     private TextView cardBackTV;
+    private TextView cardDifficultyTV;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +32,9 @@ public class CardActivity extends AppCompatActivity {
         cardBackTV = findViewById(R.id.cardTVCardBack);
         cardBackTV.setVisibility(View.GONE);
         cardBackTV.setCameraDistance(8000 * scale);
+
+        cardDifficultyTV = findViewById(R.id.cardTVCardDifficulty);
+        cardDifficultyTV.setText("EASY");
 
         textFrontAnimatorSet = new AnimatorSet();
         textBackAnimatorSet = new AnimatorSet();
@@ -60,5 +64,9 @@ public class CardActivity extends AppCompatActivity {
             cardFrontTV.setVisibility(View.VISIBLE);
             isFront = true;
         }
+    }
+
+    public void deleteCard(View v) {
+
     }
 }
