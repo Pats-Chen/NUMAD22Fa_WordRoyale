@@ -8,7 +8,16 @@ public class Card {
     private String cardDifficulty;
 
     public Card() {
-
+        this.cardID = null;
+        this.cardCreatorUID = null;
+        this.cardFront = null;
+        this.cardBack = null;
+        if (cardBack.length() > 8) {
+            this.cardDifficulty = "HARD";
+        }
+        else {
+            this.cardDifficulty = "EASY";
+        }
     }
 
     public Card(String cardID, String cardFront, String cardBack) {

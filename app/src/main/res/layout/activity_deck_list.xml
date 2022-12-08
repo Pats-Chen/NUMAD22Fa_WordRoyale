@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CardListActivity" >
+    tools:context=".DeckListActivity" >
 
     <LinearLayout
-        android:id="@+id/cardListLayout"
+        android:id="@+id/deckListLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -18,38 +18,16 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-            android:id="@+id/cardListRVLayout"
+            android:id="@+id/deckListRVLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/cardListRV"
+                android:id="@+id/deckListRV"
                 android:layout_width="match_parent"
                 android:layout_height="350dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/cardListButtonLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/newCardButtonCardListActivity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:onClick="newCardDialog"
-                android:text="NEW CARD"
-                android:textStyle="bold"
-                app:cornerRadius="15dp"
-                app:layout_constraintBottom_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent" />
         </LinearLayout>
     </LinearLayout>
 
