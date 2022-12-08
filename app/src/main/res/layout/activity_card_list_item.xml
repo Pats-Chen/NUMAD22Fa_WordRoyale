@@ -1,53 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardElevation="8dp"
+    app:cardCornerRadius="8dp">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:orientation="vertical" >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cardListItemLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="6dp" >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/cardListItemFrontHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WORD: "
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/cardListItemFront"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CARD FRONT"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/cardListItemBack"/>
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/cardListItemBackHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ANSWER: "
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/cardListItemBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CARD BACK"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cardListItemFront"
-                app:layout_constraintEnd_toStartOf="@+id/cardListItemDifficulty"/>
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/cardListItemDifficultyHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DIFFICULTY: "
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/cardListItemDifficulty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="CARD DIFFICULTY"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/cardListItemBack"
-                app:layout_constraintEnd_toEndOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-</LinearLayout>
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
