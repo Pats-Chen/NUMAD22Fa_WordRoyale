@@ -8,6 +8,7 @@ public class User {
     private String userUID;
     private String password;
     private List<Card> cardList;
+    private String nextCardID;
     private List<String> friendList;
 
     public User() {
@@ -19,9 +20,8 @@ public class User {
         this.userUID = null;
         this.password = password;
         this.cardList = new ArrayList<>();
-        this.cardList.add(new Card("0000", "CARD COUNTER", "0000"));
+        this.nextCardID = "0001";
         this.friendList = new ArrayList<>();
-        this.friendList.add(this.userUID);
     }
 
     public String getUserUID() {
@@ -40,11 +40,23 @@ public class User {
         return this.cardList;
     }
 
+    public String getNextCardID() {
+        return this.nextCardID;
+    }
+
     public List<String> getUserFriendList() {
         return this.friendList;
     }
 
     public void setUserUID(String userUID) {
         this.userUID = userUID;
+    }
+
+    public void addCardToList(Card card) {
+        this.cardList.add(card);
+    }
+
+    public void addFriendToList(String friendUID) {
+        this.friendList.add(friendUID);
     }
 }

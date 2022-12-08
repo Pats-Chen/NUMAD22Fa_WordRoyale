@@ -2,6 +2,7 @@ package edu.northeastern.numad22fa_wordroyale;
 
 public class Card {
     private String cardID;
+    private String cardCreatorUID;
     private String cardFront;
     private String cardBack;
     private String cardDifficulty;
@@ -12,6 +13,7 @@ public class Card {
 
     public Card(String cardID, String cardFront, String cardBack) {
         this.cardID = cardID;
+        this.cardCreatorUID = null;
         this.cardFront = cardFront;
         this.cardBack = cardBack;
         if (cardBack.length() > 8) {
@@ -26,6 +28,10 @@ public class Card {
         return this.cardID;
     }
 
+    public String getCardCreatorUID() {
+        return this.cardCreatorUID;
+    }
+
     public String getCardFront() {
         return this.cardFront;
     }
@@ -36,5 +42,9 @@ public class Card {
 
     public String getCardDifficulty() {
         return this.cardDifficulty;
+    }
+
+    public void setCardCreatorUID(String cardCreatorUID) {
+        this.cardCreatorUID = cardCreatorUID;
     }
 }

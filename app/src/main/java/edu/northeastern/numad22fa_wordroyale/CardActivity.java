@@ -2,6 +2,7 @@ package edu.northeastern.numad22fa_wordroyale;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -14,6 +15,10 @@ public class CardActivity extends AppCompatActivity {
     private AnimatorSet textBackAnimatorSet;
     private float scale;
     private boolean isFront;
+    private String cardID;
+    private String cardFront;
+    private String cardBack;
+    private String cardDifficulty;
     private TextView cardFrontTV;
     private TextView cardBackTV;
     private TextView cardDifficultyTV;
@@ -23,18 +28,27 @@ public class CardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card);
 
+        Intent intent = getIntent();
+        Bundle cardBundle = intent.getExtras();
+        cardID = cardBundle.getString("CARD ID");
+        cardFront = cardBundle.getString("CARD FRONT");
+        cardBack = cardBundle.getString("CARD BACK");
+        cardDifficulty = cardBundle.getString("CARD DIFFICULTY");
+
         isFront = true;
         scale = getApplicationContext().getResources().getDisplayMetrics().density;
         cardFrontTV = findViewById(R.id.cardTVCardFront);
         cardFrontTV.setVisibility(View.VISIBLE);
         cardFrontTV.setCameraDistance(8000 * scale);
+        cardFrontTV.setText(cardFront);
 
         cardBackTV = findViewById(R.id.cardTVCardBack);
         cardBackTV.setVisibility(View.GONE);
         cardBackTV.setCameraDistance(8000 * scale);
+        cardBackTV.setText(cardBack);
 
         cardDifficultyTV = findViewById(R.id.cardTVCardDifficulty);
-        cardDifficultyTV.setText("EASY");
+        cardDifficultyTV.setText(cardDifficulty);
 
         textFrontAnimatorSet = new AnimatorSet();
         textBackAnimatorSet = new AnimatorSet();

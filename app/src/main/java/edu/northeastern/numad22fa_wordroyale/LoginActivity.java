@@ -66,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Authentication succeeded.", Toast.LENGTH_SHORT).show();
                             User newUser = new User(userEmail, password);
                             newUser.setUserUID(userAuth.getCurrentUser().getUid());
+
                             rootRef.child("users")
                                     .child(Objects.requireNonNull(userAuth.getCurrentUser()).getUid())
                                     .setValue(newUser)
