@@ -75,4 +75,9 @@ public class MainActivity extends AppCompatActivity {
         Intent cardListActivityIntent = new Intent(this, CardListActivity.class);
         startActivity(cardListActivityIntent);
     }
+
+    public void deckListActivity(View v) {
+        Intent deckListActivityIntent = new Intent(this, DeckListActivity.class);
+        startActivity(deckListActivityIntent);
+    }
 }

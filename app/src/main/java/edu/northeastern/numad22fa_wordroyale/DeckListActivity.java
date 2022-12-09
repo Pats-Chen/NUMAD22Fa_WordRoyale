@@ -1,11 +1,15 @@
 package edu.northeastern.numad22fa_wordroyale;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -88,6 +93,7 @@ public class DeckListActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull DeckListActivity.DeckViewHolder holder, int position) {
             holder.deckNameTV.setText(deckList.get(position).getDeckName());
+            holder.deckSizeTV.setText(deckList.get(position).getDeckSize());
 
             holder.itemView.setOnClickListener(view -> {
                 //TODO: Test Activity
@@ -106,5 +112,75 @@ public class DeckListActivity extends AppCompatActivity {
         public int getItemCount() {
             return deckList.size();
         }
+    }
+
+    public class DeckViewHolder extends RecyclerView.ViewHolder {
+        TextView deckNameTV;
+        TextView deckSizeTV;
+
+        public DeckViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            deckNameTV = itemView.findViewById(R.id.deckListItemName);
+            deckSizeTV = itemView.findViewById(R.id.deckListItemSize);
+        }
+    }
+
+    public void newCardDialog(View v) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_create_new_deck, null);
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setTitle("CREATE A NEW DECK!");
+
+        TextInputLayout newDeckNameLayout = dialogView.findViewById(R.id.newDeckNameInputLayout);
+
+        dialogBuilder.setPositiveButton("CREATE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                String newDeckName = newDeckNameLayout.getEditText().getText().toString().trim();
+
+                saveNewDeckToDatabase(newDeckName);
+            }
+        });
+
+        dialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+
+        dialogBuilder.create().show();
+    }
+//
+    public void saveNewDeckToDatabase(String newDeckName) {
+//        if (newCardFront != null && newCardBack != null) {
+//            rootRef.child("users")
+//                    .child(userAuth.getCurrentUser().getUid())
+//                    .child("nextCardID").get().addOnCompleteListener(task -> {
+//                        if (!task.isSuccessful()) {
+//                            Log.e(TAG, "Error getting data", task.getException());
+//                        } else {
+//                            Log.d(TAG, String.valueOf(task.getResult().getValue()));
+//                            String newCardID = String.valueOf(task.getResult().getValue());
+//
+//                            Card newCard = new Card(newCardID, newCardFront, newCardBack);
+//                            newCard.setCardCreatorUID(userAuth.getCurrentUser().getUid());
+//
+//                            rootRef.child("users")
+//                                    .child(userAuth.getCurrentUser().getUid())
+//                                    .child("cardList")
+//                                    .child(newCardID)
+//                                    .setValue(newCard);
+//
+//                            String nextCardIDPlus = Integer.toString(Integer.parseInt(newCardID) + 1);
+//                            String nextCardID = String.format("%1$" + 4 + "s", nextCardIDPlus).replace(' ', '0');
+//                            rootRef.child("users")
+//                                    .child(userAuth.getCurrentUser().getUid())
+//                                    .child("nextCardID").setValue(nextCardID);
+//                        }
+//                    });
+//        } else {
+//            Log.e(TAG, "Empty cards are not allowed!");
+//        }
     }
 }
