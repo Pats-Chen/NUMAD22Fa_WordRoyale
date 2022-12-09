@@ -31,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
     private final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     private final FirebaseAuth userAuth = FirebaseAuth.getInstance();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +82,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-
 //        rootRef.child("users").child("000000").child("nextUserID").get().addOnCompleteListener(task -> {
 //            if (!task.isSuccessful()) {
 //                Log.e(TAG, "Error getting data", task.getException());

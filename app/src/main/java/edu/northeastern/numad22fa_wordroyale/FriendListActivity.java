@@ -18,17 +18,13 @@ import java.util.List;
 public class FriendListActivity extends AppCompatActivity {
     private RecyclerView friendListRV;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_list);
 
         friendListRV = findViewById(R.id.friendListRV);
-
     }
-
-
 
     public class FriendAdapter extends RecyclerView.Adapter<FriendListActivity.FriendViewHolder> {
         private Context context;
@@ -68,7 +64,6 @@ public class FriendListActivity extends AppCompatActivity {
             return friendIDList.size();
         }
     }
-
 
     public class FriendViewHolder extends RecyclerView.ViewHolder {
         TextView friendID;

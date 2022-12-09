@@ -81,6 +81,6 @@ public class CardActivity extends AppCompatActivity {
     }
 
     public void deleteCard(View v) {
-
+        //TODO: delete card.
     }
 }

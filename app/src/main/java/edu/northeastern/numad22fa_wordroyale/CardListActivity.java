@@ -2,7 +2,7 @@ package edu.northeastern.numad22fa_wordroyale;
 
 import android.app.AlertDialog;
 
-import android.content.Context;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,9 +41,9 @@ public class CardListActivity extends AppCompatActivity {
     public static final String TAG = "CardListActivity";
     private RecyclerView cardListRV;
     private CardAdapter cardListAdapter;
-    private List<Card> cardList;
     private final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     private final FirebaseAuth userAuth = FirebaseAuth.getInstance();
+    private FirebaseRecyclerOptions<Card> options;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,25 +56,29 @@ public class CardListActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_card_list);
 
-        cardList = new ArrayList<>();
-        cardListAdapter = new CardAdapter(this, cardList);
-        rootRef.child("users")
-                .child(userAuth.getCurrentUser().getUid())
-                .child("cardList").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            Card card = dataSnapshot.getValue(Card.class);
-                            cardList.add(card);
-                        }
-                        cardListAdapter.notifyDataSetChanged();
-                    }
+        options = new FirebaseRecyclerOptions.Builder<Card>()
+                .setQuery(rootRef.child("users").child(userAuth.getCurrentUser().getUid()).child("cardList"), Card.class)
+                .build();
+        cardListAdapter = new CardAdapter(options);
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+//        cardListAdapter = new CardAdapter(this, cardList);
+//        rootRef.child("users")
+//                .child(userAuth.getCurrentUser().getUid())
+//                .child("cardList").addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                            Card card = dataSnapshot.getValue(Card.class);
+//                            cardList.add(card);
+//                        }
+//                        cardListAdapter.notifyDataSetChanged();
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
 
         cardListRV = findViewById(R.id.cardListRV);
         cardListRV.setHasFixedSize(true);
@@ -80,58 +86,16 @@ public class CardListActivity extends AppCompatActivity {
         cardListRV.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public class CardAdapter extends RecyclerView.Adapter<CardViewHolder> {
-        private Context context;
-        private List<Card> cardList;
-
-        CardAdapter(Context context, List<Card> cardList) {
-            this.context = context;
-            this.cardList = cardList;
-        }
-
-        @NonNull
-        @Override
-        public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater inflater = LayoutInflater.from(context);
-            View view = inflater.inflate(R.layout.activity_card_list_item, parent, false);
-            return new CardViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull CardViewHolder holder, int position) {
-            holder.cardFrontTV.setText(cardList.get(position).getCardFront());
-            holder.cardBackTV.setText(cardList.get(position).getCardBack());
-            holder.cardDifficulty.setText(cardList.get(position).getCardDifficulty());
-            holder.itemView.setOnClickListener(view -> {
-                Intent intent = new Intent(context, CardActivity.class);
-                Bundle cardBundle = new Bundle();
-                cardBundle.putString("CARD ID", cardList.get(position).getCardID());
-                cardBundle.putString("CARD FRONT", cardList.get(position).getCardFront());
-                cardBundle.putString("CARD BACK", cardList.get(position).getCardBack());
-                cardBundle.putString("CARD DIFFICULTY", cardList.get(position).getCardDifficulty());
-                intent.putExtras(cardBundle);
-                context.startActivity(intent);
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return cardList.size();
-        }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        cardListAdapter.startListening();
     }
 
-    public class CardViewHolder extends RecyclerView.ViewHolder {
-        TextView cardFrontTV;
-        TextView cardBackTV;
-        TextView cardDifficulty;
-
-        public CardViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            cardFrontTV = itemView.findViewById(R.id.cardListItemFront);
-            cardBackTV = itemView.findViewById(R.id.cardListItemBack);
-            cardDifficulty = itemView.findViewById(R.id.cardListItemDifficulty);
-        }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        cardListAdapter.stopListening();
     }
 
     public void newCardDialog(View v) {
@@ -143,21 +107,14 @@ public class CardListActivity extends AppCompatActivity {
         TextInputLayout newCardFrontLayout = dialogView.findViewById(R.id.newCardFrontInputLayout);
         TextInputLayout newCardBackLayout = dialogView.findViewById(R.id.newCardBackInputLayout);
 
-        dialogBuilder.setPositiveButton("CREATE", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                String newCardFront = newCardFrontLayout.getEditText().getText().toString().trim();
-                String newCardBack = newCardBackLayout.getEditText().getText().toString().trim();
+        dialogBuilder.setPositiveButton("CREATE", (dialog, id) -> {
+            String newCardFront = newCardFrontLayout.getEditText().getText().toString().trim();
+            String newCardBack = newCardBackLayout.getEditText().getText().toString().trim();
 
-                saveNewCardToDatabase(newCardFront, newCardBack);
-            }
+            saveNewCardToDatabase(newCardFront, newCardBack);
         });
 
-        dialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        });
+        dialogBuilder.setNegativeButton("CANCEL", (dialog, id) -> dialog.cancel());
 
         dialogBuilder.create().show();
     }
@@ -191,6 +148,52 @@ public class CardListActivity extends AppCompatActivity {
                     });
         } else {
             Log.e(TAG, "Empty cards are not allowed!");
+        }
+    }
+
+    public class CardAdapter extends FirebaseRecyclerAdapter<Card, CardViewHolder> {
+
+        public CardAdapter(@NonNull FirebaseRecyclerOptions<Card> options) {
+            super(options);
+        }
+
+        @NonNull
+        @Override
+        public CardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            View view = inflater.inflate(R.layout.activity_card_list_item, parent, false);
+            return new CardViewHolder(view);
+        }
+
+        @Override
+        protected void onBindViewHolder(@NonNull CardViewHolder holder, int position, @NonNull Card model) {
+            holder.cardFrontTV.setText(model.getCardFront());
+            holder.cardBackTV.setText(model.getCardBack());
+            holder.cardDifficulty.setText(model.getCardDifficulty());
+            holder.itemView.setOnClickListener(view -> {
+                Intent intent = new Intent(CardListActivity.this, CardActivity.class);
+                Bundle cardBundle = new Bundle();
+                cardBundle.putString("CARD ID", model.getCardID());
+                cardBundle.putString("CARD FRONT", model.getCardFront());
+                cardBundle.putString("CARD BACK", model.getCardBack());
+                cardBundle.putString("CARD DIFFICULTY", model.getCardDifficulty());
+                intent.putExtras(cardBundle);
+                CardListActivity.this.startActivity(intent);
+            });
+        }
+    }
+
+    public class CardViewHolder extends RecyclerView.ViewHolder {
+        TextView cardFrontTV;
+        TextView cardBackTV;
+        TextView cardDifficulty;
+
+        public CardViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            cardFrontTV = itemView.findViewById(R.id.cardListItemFront);
+            cardBackTV = itemView.findViewById(R.id.cardListItemBack);
+            cardDifficulty = itemView.findViewById(R.id.cardListItemDifficulty);
         }
     }
 }

@@ -73,60 +73,7 @@ public class DeckListActivity extends AppCompatActivity {
         deckListRV.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    public class DeckAdapter extends RecyclerView.Adapter<DeckListActivity.DeckViewHolder> {
-        private Context context;
-        private List<Deck> deckList;
-
-        DeckAdapter(Context context, List<Deck> deckList) {
-            this.context = context;
-            this.deckList = deckList;
-        }
-
-        @NonNull
-        @Override
-        public DeckListActivity.DeckViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater inflater = LayoutInflater.from(context);
-            View view = inflater.inflate(R.layout.activity_deck_list_item, parent, false);
-            return new DeckListActivity.DeckViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull DeckListActivity.DeckViewHolder holder, int position) {
-            holder.deckNameTV.setText(deckList.get(position).getDeckName());
-            holder.deckSizeTV.setText(deckList.get(position).getDeckSize());
-
-            holder.itemView.setOnClickListener(view -> {
-                //TODO: Test Activity
-//                Intent intent = new Intent(context, CardActivity.class);
-//                Bundle cardBundle = new Bundle();
-//                cardBundle.putString("CARD ID", cardList.get(position).getCardID());
-//                cardBundle.putString("CARD FRONT", cardList.get(position).getCardFront());
-//                cardBundle.putString("CARD BACK", cardList.get(position).getCardBack());
-//                cardBundle.putString("CARD DIFFICULTY", cardList.get(position).getCardDifficulty());
-//                intent.putExtras(cardBundle);
-//                context.startActivity(intent);
-            });
-        }
-
-        @Override
-        public int getItemCount() {
-            return deckList.size();
-        }
-    }
-
-    public class DeckViewHolder extends RecyclerView.ViewHolder {
-        TextView deckNameTV;
-        TextView deckSizeTV;
-
-        public DeckViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            deckNameTV = itemView.findViewById(R.id.deckListItemName);
-            deckSizeTV = itemView.findViewById(R.id.deckListItemSize);
-        }
-    }
-
-    public void newCardDialog(View v) {
+    public void newDeckDialog(View v) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_create_new_deck, null);
         dialogBuilder.setView(dialogView);
@@ -151,36 +98,75 @@ public class DeckListActivity extends AppCompatActivity {
 
         dialogBuilder.create().show();
     }
-//
+
     public void saveNewDeckToDatabase(String newDeckName) {
-//        if (newCardFront != null && newCardBack != null) {
-//            rootRef.child("users")
-//                    .child(userAuth.getCurrentUser().getUid())
-//                    .child("nextCardID").get().addOnCompleteListener(task -> {
-//                        if (!task.isSuccessful()) {
-//                            Log.e(TAG, "Error getting data", task.getException());
-//                        } else {
-//                            Log.d(TAG, String.valueOf(task.getResult().getValue()));
-//                            String newCardID = String.valueOf(task.getResult().getValue());
-//
-//                            Card newCard = new Card(newCardID, newCardFront, newCardBack);
-//                            newCard.setCardCreatorUID(userAuth.getCurrentUser().getUid());
-//
-//                            rootRef.child("users")
-//                                    .child(userAuth.getCurrentUser().getUid())
-//                                    .child("cardList")
-//                                    .child(newCardID)
-//                                    .setValue(newCard);
-//
-//                            String nextCardIDPlus = Integer.toString(Integer.parseInt(newCardID) + 1);
-//                            String nextCardID = String.format("%1$" + 4 + "s", nextCardIDPlus).replace(' ', '0');
-//                            rootRef.child("users")
-//                                    .child(userAuth.getCurrentUser().getUid())
-//                                    .child("nextCardID").setValue(nextCardID);
-//                        }
-//                    });
-//        } else {
-//            Log.e(TAG, "Empty cards are not allowed!");
-//        }
+        if (newDeckName != null) {
+            Deck newDeck = new Deck(newDeckName);
+            newDeck.setDeckCreatorUID(userAuth.getCurrentUser().getUid());
+            //TODO: check if deck name is used.
+            rootRef.child("users")
+                    .child(userAuth.getCurrentUser().getUid())
+                    .child("deckList")
+                    .child(newDeckName)
+                    .setValue(newDeck);
+        } else {
+            Log.e(TAG, "Empty deck names are not allowed!");
+        }
+    }
+
+    public class DeckAdapter extends RecyclerView.Adapter<DeckListActivity.DeckViewHolder> {
+        private Context context;
+        private List<Deck> deckList;
+
+        DeckAdapter(Context context, List<Deck> deckList) {
+            this.context = context;
+            this.deckList = deckList;
+        }
+
+        @NonNull
+        @Override
+        public DeckListActivity.DeckViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater inflater = LayoutInflater.from(context);
+            View view = inflater.inflate(R.layout.activity_deck_list_item, parent, false);
+            return new DeckListActivity.DeckViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull DeckListActivity.DeckViewHolder holder, int position) {
+            holder.deckNameTV.setText(deckList.get(position).getDeckName());
+            holder.deckCreatorUIDTV.setText(deckList.get(position).getDeckCreatorUID());
+            holder.deckSizeTV.setText(deckList.get(position).getDeckSize());
+
+            holder.itemView.setOnClickListener(view -> {
+                //TODO: Test Activity
+//                Intent intent = new Intent(context, CardActivity.class);
+//                Bundle cardBundle = new Bundle();
+//                cardBundle.putString("CARD ID", cardList.get(position).getCardID());
+//                cardBundle.putString("CARD FRONT", cardList.get(position).getCardFront());
+//                cardBundle.putString("CARD BACK", cardList.get(position).getCardBack());
+//                cardBundle.putString("CARD DIFFICULTY", cardList.get(position).getCardDifficulty());
+//                intent.putExtras(cardBundle);
+//                context.startActivity(intent);
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return deckList.size();
+        }
+    }
+
+    public class DeckViewHolder extends RecyclerView.ViewHolder {
+        TextView deckNameTV;
+        TextView deckCreatorUIDTV;
+        TextView deckSizeTV;
+
+        public DeckViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            deckNameTV = itemView.findViewById(R.id.deckListItemName);
+            deckCreatorUIDTV = itemView.findViewById(R.id.deckListItemCreatorUID);
+            deckSizeTV = itemView.findViewById(R.id.deckListItemSize);
+        }
     }
 }

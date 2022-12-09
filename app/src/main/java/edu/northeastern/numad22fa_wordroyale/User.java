@@ -12,7 +12,12 @@ public class User {
     private List<String> friendList;
 
     public User() {
-
+        this.userEmail = null;
+        this.userUID = null;
+        this.password = null;
+        this.cardList = new ArrayList<>();
+        this.nextCardID = "0001";
+        this.friendList = new ArrayList<>();
     }
 
     public User(String userEmail, String password) {
