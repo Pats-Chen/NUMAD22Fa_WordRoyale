@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,13 +29,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DeckListActivity extends AppCompatActivity {
     public static final String TAG = "DeckListActivity";
     private RecyclerView deckListRV;
     private DeckListActivity.DeckAdapter deckListAdapter;
-    private List<Deck> deckList;
+    private HashMap<String, Card> cardHashMap;
     private final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     private final FirebaseAuth userAuth = FirebaseAuth.getInstance();
     private FirebaseRecyclerOptions<Deck> options;
@@ -84,7 +86,12 @@ public class DeckListActivity extends AppCompatActivity {
         dialogBuilder.setPositiveButton("CREATE", (dialog, id) -> {
             String newDeckName = newDeckNameLayout.getEditText().getText().toString().trim();
 
-            saveNewDeckToDatabase(newDeckName);
+            if (newDeckName != null) {
+                saveNewDeckToDatabase(newDeckName);
+            } else {
+                Toast.makeText(DeckListActivity.this, "Empty deck names are not allowed!", Toast.LENGTH_SHORT).show();
+            }
+
         });
 
         dialogBuilder.setNegativeButton("CANCEL", (dialog, id) -> dialog.cancel());
@@ -93,18 +100,23 @@ public class DeckListActivity extends AppCompatActivity {
     }
 
     public void saveNewDeckToDatabase(String newDeckName) {
-        if (newDeckName != null) {
-            Deck newDeck = new Deck(newDeckName);
-            newDeck.setDeckCreatorUID(userAuth.getCurrentUser().getUid());
-            //TODO: check if deck name is used.
-            rootRef.child("users")
-                    .child(userAuth.getCurrentUser().getUid())
-                    .child("deckList")
-                    .child(newDeckName)
-                    .setValue(newDeck);
-        } else {
-            Log.e(TAG, "Empty deck names are not allowed!");
-        }
+        Deck newDeck = new Deck(newDeckName);
+        newDeck.setDeckCreatorUID(userAuth.getCurrentUser().getUid());
+        //TODO: check if deck name is used.
+        rootRef.child("users")
+                .child(userAuth.getCurrentUser().getUid())
+                .child("deckList")
+                .child(newDeckName)
+                .setValue(newDeck);
+//            rootRef.child("users")
+//                    .child(userAuth.getCurrentUser().getUid())
+//                    .child("deckList")
+//                    .child(newDeckName)
+//                    .child("cardList")
+//                    .child("0000")
+//                    .setValue(new Card("0000", "PLACEHOLDER", "PLACEHOLDER"));
+
+        Toast.makeText(DeckListActivity.this, "Deck created successfully!", Toast.LENGTH_SHORT).show();
     }
 
     public class DeckAdapter extends FirebaseRecyclerAdapter<Deck, DeckListActivity.DeckViewHolder> {
@@ -130,10 +142,10 @@ public class DeckListActivity extends AppCompatActivity {
                 //TODO: Test Activity
 //                Intent intent = new Intent(context, CardActivity.class);
 //                Bundle cardBundle = new Bundle();
-//                cardBundle.putString("CARD ID", cardList.get(position).getCardID());
-//                cardBundle.putString("CARD FRONT", cardList.get(position).getCardFront());
-//                cardBundle.putString("CARD BACK", cardList.get(position).getCardBack());
-//                cardBundle.putString("CARD DIFFICULTY", cardList.get(position).getCardDifficulty());
+//                cardBundle.putString("CARD ID", cardHashMap.get(position).getCardID());
+//                cardBundle.putString("CARD FRONT", cardHashMap.get(position).getCardFront());
+//                cardBundle.putString("CARD BACK", cardHashMap.get(position).getCardBack());
+//                cardBundle.putString("CARD DIFFICULTY", cardHashMap.get(position).getCardDifficulty());
 //                intent.putExtras(cardBundle);
 //                context.startActivity(intent);
             });

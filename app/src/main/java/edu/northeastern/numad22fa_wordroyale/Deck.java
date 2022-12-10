@@ -1,23 +1,22 @@
 package edu.northeastern.numad22fa_wordroyale;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Deck {
     private String deckName;
     private String deckCreatorUID;
-    private List<Card> cardList;
+    private long deckSize;
 
     public Deck() {
-        this.deckName = null;
-        this.deckCreatorUID = null;
-        this.cardList = new ArrayList<>();
+
     }
 
     public Deck(String deckName) {
         this.deckName = deckName;
         this.deckCreatorUID = null;
-        this.cardList = new ArrayList<>();
+        this.deckSize = 0;
     }
 
     public String getDeckName() {
@@ -28,19 +27,11 @@ public class Deck {
         return this.deckCreatorUID;
     }
 
-    public List<Card> getCardList() {
-        return this.cardList;
-    }
-
-    public int getDeckSize() {
-        return this.cardList.size();
+    public long getDeckSize() {
+        return this.deckSize;
     }
 
     public void setDeckCreatorUID(String creatorUID) {
         this.deckCreatorUID = creatorUID;
-    }
-
-    public void addCardToDeck(Card card) {
-        this.cardList.add(card);
     }
 }

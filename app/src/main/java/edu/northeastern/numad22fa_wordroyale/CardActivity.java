@@ -2,19 +2,36 @@ package edu.northeastern.numad22fa_wordroyale;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class CardActivity extends AppCompatActivity {
+    public static final String TAG = "CardActivity";
     private AnimatorSet textFrontAnimatorSet;
     private AnimatorSet textBackAnimatorSet;
     private float scale;
@@ -65,7 +82,7 @@ public class CardActivity extends AppCompatActivity {
         cardDifficultyTV = findViewById(R.id.cardTVCardDifficulty);
         cardDifficultyTV.setText("CARD DIFFICULTY: " + cardDifficulty);
         cardCreatorUIDTV = findViewById(R.id.cardTVCardCreatorUID);
-        cardCreatorUIDTV.setText("CARD CREATOR UID: " + cardCreatorUID);
+        cardCreatorUIDTV.setText(cardCreatorUID);
 
         textFrontAnimatorSet = new AnimatorSet();
         textBackAnimatorSet = new AnimatorSet();
@@ -102,6 +119,84 @@ public class CardActivity extends AppCompatActivity {
     }
 
     public void addCardToDeck(View v) {
-        //TODO: add card to deck.
+        Card thisCard = new Card(cardID, cardFront, cardBack);
+        thisCard.setCardCreatorUID(cardCreatorUID);
+
+        selectDeckDialog(thisCard);
+    }
+
+    public void selectDeckDialog(Card thisCard) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_select_deck, null);
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setTitle("ADD THE CARD TO A DECK!");
+
+        TextInputLayout selectDeckNameLayout = dialogView.findViewById(R.id.selectDeckNameInputLayout);
+
+        dialogBuilder.setPositiveButton("CONFIRM", (dialog, id) -> {
+
+            String selectedDeckName = selectDeckNameLayout.getEditText().getText().toString().trim();
+
+            if (selectedDeckName == null) {
+                Toast.makeText(CardActivity.this, "Deck name can not be empty!", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            } else {
+                rootRef.child("users")
+                        .child(userAuth.getCurrentUser().getUid())
+                        .child("deckList").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        if (snapshot.hasChild(selectedDeckName)) {
+                            if (snapshot.child(selectedDeckName).child("cardHashMap").hasChild(thisCard.getCardID())) {
+                                Toast.makeText(CardActivity.this, "This card is already in this deck!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                rootRef.child("users")
+                                        .child(userAuth.getCurrentUser().getUid())
+                                        .child("deckList")
+                                        .child(selectedDeckName)
+                                        .child("cardList")
+                                        .child(thisCard.getCardID())
+                                        .setValue(thisCard);
+
+                                rootRef.child("users")
+                                        .child(userAuth.getCurrentUser().getUid())
+                                        .child("deckList")
+                                        .child(selectedDeckName)
+                                        .child("deckSize")
+                                        .get().addOnCompleteListener(task -> {
+                                            if (!task.isSuccessful()) {
+                                                Log.e(TAG, "Error getting data", task.getException());
+                                            } else {
+                                                Log.d(TAG, String.valueOf(task.getResult().getValue()));
+                                                Long deckSize = (Long) task.getResult().getValue();
+
+
+                                                rootRef.child("users")
+                                                        .child(userAuth.getCurrentUser().getUid())
+                                                        .child("deckList")
+                                                        .child(selectedDeckName)
+                                                        .child("deckSize")
+                                                        .setValue(deckSize + 1);
+                                            }
+                                        });
+
+                                Toast.makeText(CardActivity.this, "Card added successfully!", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(CardActivity.this, "This deck does not exist!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+
+        dialogBuilder.setNegativeButton("CANCEL", (dialog, id) -> dialog.cancel());
+
+        dialogBuilder.create().show();
     }
 }
