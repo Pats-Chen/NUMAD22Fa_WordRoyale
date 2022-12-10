@@ -83,4 +83,8 @@ public class CardActivity extends AppCompatActivity {
     public void deleteCard(View v) {
         //TODO: delete card.
     }
+
+    public void addCardToDeck(View v) {
+        //TODO: add card to deck.
+    }
 }

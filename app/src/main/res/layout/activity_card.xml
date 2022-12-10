@@ -10,22 +10,21 @@
 
     <LinearLayout
         android:id="@+id/cardActivityCardLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
             android:layout_width="300dp"
             android:layout_height="450dp"
-            android:layout_margin="10dp"
             android:layout_gravity="center"
-            app:cardElevation="8dp"
-            app:cardCornerRadius="8dp">
+            android:layout_margin="10dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp">
 
             <TextView
                 android:id="@+id/cardTVCardFront"
@@ -33,66 +32,82 @@
                 android:layout_height="450dp"
                 android:background="@color/design_default_color_primary"
                 android:gravity="center"
+                android:onClick="cardFrontToBack"
                 android:text="@string/card_card_front"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textStyle="bold"
-                android:onClick="cardFrontToBack"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/cardTVCardBack"
                 android:layout_width="300dp"
                 android:layout_height="450dp"
-                android:textAlignment="center"
-                android:text="@string/card_card_back"
-                android:textColor="#000000"
-                android:textStyle="bold"
+                android:alpha="0"
                 android:background="@color/design_default_color_secondary"
                 android:gravity="center"
-                android:alpha="0"
                 android:onClick="cardBackToFront"
-                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/card_card_back"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.cardview.widget.CardView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/cardTVCardDifficulty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="CARD DIFFICULTY: -"
                 android:textAlignment="center"
-                android:text="CARD DIFFICULTY"
                 android:textColor="#000000"
                 android:textStyle="bold"
-                android:alpha="0"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/deleteButtonCard"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/addToDeckButtonCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:onClick="addCardToDeck"
+                android:text="ADD TO DECK"
+                android:textStyle="bold"
+                app:cornerRadius="15dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/deleteButtonCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
+                android:onClick="deleteCard"
                 android:text="DELETE"
                 android:textStyle="bold"
-                android:onClick="deleteCard"
-                app:cornerRadius="15dp"
-                app:layout_constraintTop_toBottomOf="@+id/cardTVCardDifficulty"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                app:cornerRadius="15dp" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

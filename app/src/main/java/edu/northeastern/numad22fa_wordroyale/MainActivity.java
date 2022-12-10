@@ -61,11 +61,6 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    public void cardActivity(View v) {
-        Intent cardActivityIntent = new Intent(this, CardActivity.class);
-        startActivity(cardActivityIntent);
-    }
-
     public void loginActivity(View v) {
         Intent loginActivityIntent = new Intent(this, LoginActivity.class);
         startActivity(loginActivityIntent);
