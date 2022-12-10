@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +37,7 @@ public class DeckListActivity extends AppCompatActivity {
     private List<Deck> deckList;
     private final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     private final FirebaseAuth userAuth = FirebaseAuth.getInstance();
+    private FirebaseRecyclerOptions<Deck> options;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,30 +50,27 @@ public class DeckListActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_deck_list);
 
-        deckList = new ArrayList<>();
-        deckListAdapter = new DeckListActivity.DeckAdapter(this, deckList);
-        rootRef.child("users")
-                .child(userAuth.getCurrentUser().getUid())
-                .child("deckList").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            Deck deck = dataSnapshot.getValue(Deck.class);
-                            deckList.add(deck);
-                        }
-                        deckListAdapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+        options = new FirebaseRecyclerOptions.Builder<Deck>()
+                .setQuery(rootRef.child("users").child(userAuth.getCurrentUser().getUid()).child("deckList"), Deck.class)
+                .build();
+        deckListAdapter = new DeckListActivity.DeckAdapter(options);
 
         deckListRV = findViewById(R.id.deckListRV);
         deckListRV.setHasFixedSize(true);
         deckListRV.setAdapter(deckListAdapter);
         deckListRV.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        deckListAdapter.startListening();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        deckListAdapter.stopListening();
     }
 
     public void newDeckDialog(View v) {
@@ -81,20 +81,13 @@ public class DeckListActivity extends AppCompatActivity {
 
         TextInputLayout newDeckNameLayout = dialogView.findViewById(R.id.newDeckNameInputLayout);
 
-        dialogBuilder.setPositiveButton("CREATE", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                String newDeckName = newDeckNameLayout.getEditText().getText().toString().trim();
+        dialogBuilder.setPositiveButton("CREATE", (dialog, id) -> {
+            String newDeckName = newDeckNameLayout.getEditText().getText().toString().trim();
 
-                saveNewDeckToDatabase(newDeckName);
-            }
+            saveNewDeckToDatabase(newDeckName);
         });
 
-        dialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        });
+        dialogBuilder.setNegativeButton("CANCEL", (dialog, id) -> dialog.cancel());
 
         dialogBuilder.create().show();
     }
@@ -114,29 +107,25 @@ public class DeckListActivity extends AppCompatActivity {
         }
     }
 
-    public class DeckAdapter extends RecyclerView.Adapter<DeckListActivity.DeckViewHolder> {
-        private Context context;
-        private List<Deck> deckList;
+    public class DeckAdapter extends FirebaseRecyclerAdapter<Deck, DeckListActivity.DeckViewHolder> {
 
-        DeckAdapter(Context context, List<Deck> deckList) {
-            this.context = context;
-            this.deckList = deckList;
+        public DeckAdapter(@NonNull FirebaseRecyclerOptions<Deck> options) {
+            super(options);
         }
 
         @NonNull
         @Override
         public DeckListActivity.DeckViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            LayoutInflater inflater = LayoutInflater.from(context);
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
             View view = inflater.inflate(R.layout.activity_deck_list_item, parent, false);
             return new DeckListActivity.DeckViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull DeckListActivity.DeckViewHolder holder, int position) {
-            holder.deckNameTV.setText(deckList.get(position).getDeckName());
-            holder.deckCreatorUIDTV.setText(deckList.get(position).getDeckCreatorUID());
-            holder.deckSizeTV.setText(deckList.get(position).getDeckSize());
-
+        protected void onBindViewHolder(@NonNull DeckListActivity.DeckViewHolder holder, int position, @NonNull Deck model) {
+            holder.deckNameTV.setText(model.getDeckName());
+            holder.deckCreatorUIDTV.setText(model.getDeckCreatorUID());
+            holder.deckSizeTV.setText(model.getDeckSize() + "/30");
             holder.itemView.setOnClickListener(view -> {
                 //TODO: Test Activity
 //                Intent intent = new Intent(context, CardActivity.class);
@@ -148,11 +137,6 @@ public class DeckListActivity extends AppCompatActivity {
 //                intent.putExtras(cardBundle);
 //                context.startActivity(intent);
             });
-        }
-
-        @Override
-        public int getItemCount() {
-            return deckList.size();
         }
     }
 

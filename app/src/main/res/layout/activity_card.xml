@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    android:padding="50dp"
+    android:padding="20dp"
     tools:context=".CardActivity" >
 
     <LinearLayout
@@ -19,8 +19,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="300dp"
-            android:layout_height="450dp"
+            android:layout_width="350dp"
+            android:layout_height="500dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
             app:cardCornerRadius="8dp"
@@ -28,8 +28,8 @@
 
             <TextView
                 android:id="@+id/cardTVCardFront"
-                android:layout_width="300dp"
-                android:layout_height="450dp"
+                android:layout_width="350dp"
+                android:layout_height="500dp"
                 android:background="@color/design_default_color_primary"
                 android:gravity="center"
                 android:onClick="cardFrontToBack"
@@ -44,9 +44,9 @@
 
             <TextView
                 android:id="@+id/cardTVCardBack"
-                android:layout_width="300dp"
-                android:layout_height="450dp"
-                android:alpha="0"
+                android:layout_width="350dp"
+                android:layout_height="500dp"
+
                 android:background="@color/design_default_color_secondary"
                 android:gravity="center"
                 android:onClick="cardBackToFront"
@@ -76,10 +76,23 @@
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/cardTVCardCreatorUID"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/cardTVCardCreatorUID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CARD CREATOR UID: -"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardTVCardDifficulty" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout

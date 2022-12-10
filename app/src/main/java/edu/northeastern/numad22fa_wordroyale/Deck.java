@@ -39,4 +39,8 @@ public class Deck {
     public void setDeckCreatorUID(String creatorUID) {
         this.deckCreatorUID = creatorUID;
     }
+
+    public void addCardToDeck(Card card) {
+        this.cardList.add(card);
+    }
 }

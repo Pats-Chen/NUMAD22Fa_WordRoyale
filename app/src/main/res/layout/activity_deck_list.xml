@@ -29,6 +29,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="350dp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/deckListButtonLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/newDeckButtonDeckListActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:onClick="newDeckDialog"
+                android:text="NEW DECK"
+                android:textStyle="bold"
+                app:cornerRadius="15dp" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

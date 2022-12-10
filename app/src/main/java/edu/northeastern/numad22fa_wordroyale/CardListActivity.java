@@ -170,6 +170,7 @@ public class CardListActivity extends AppCompatActivity {
             holder.cardFrontTV.setText(model.getCardFront());
             holder.cardBackTV.setText(model.getCardBack());
             holder.cardDifficulty.setText(model.getCardDifficulty());
+            holder.cardCreatorUID.setText(model.getCardCreatorUID());
             holder.itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(CardListActivity.this, CardActivity.class);
                 Bundle cardBundle = new Bundle();
@@ -177,6 +178,7 @@ public class CardListActivity extends AppCompatActivity {
                 cardBundle.putString("CARD FRONT", model.getCardFront());
                 cardBundle.putString("CARD BACK", model.getCardBack());
                 cardBundle.putString("CARD DIFFICULTY", model.getCardDifficulty());
+                cardBundle.putString("CARD CREATOR UID", model.getCardCreatorUID());
                 intent.putExtras(cardBundle);
                 CardListActivity.this.startActivity(intent);
             });
@@ -187,6 +189,7 @@ public class CardListActivity extends AppCompatActivity {
         TextView cardFrontTV;
         TextView cardBackTV;
         TextView cardDifficulty;
+        TextView cardCreatorUID;
 
         public CardViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -194,6 +197,7 @@ public class CardListActivity extends AppCompatActivity {
             cardFrontTV = itemView.findViewById(R.id.cardListItemFront);
             cardBackTV = itemView.findViewById(R.id.cardListItemBack);
             cardDifficulty = itemView.findViewById(R.id.cardListItemDifficulty);
+            cardCreatorUID = itemView.findViewById(R.id.cardListItemCreatorUID);
         }
     }
 }

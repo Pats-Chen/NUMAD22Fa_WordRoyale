@@ -9,15 +9,11 @@ public class User {
     private String password;
     private List<Card> cardList;
     private String nextCardID;
+    private List<Deck> deckList;
     private List<String> friendList;
 
     public User() {
-        this.userEmail = null;
-        this.userUID = null;
-        this.password = null;
-        this.cardList = new ArrayList<>();
-        this.nextCardID = "0001";
-        this.friendList = new ArrayList<>();
+
     }
 
     public User(String userEmail, String password) {
@@ -26,6 +22,7 @@ public class User {
         this.password = password;
         this.cardList = new ArrayList<>();
         this.nextCardID = "0001";
+        this.deckList = new ArrayList<>();
         this.friendList = new ArrayList<>();
     }
 
@@ -47,6 +44,10 @@ public class User {
 
     public String getNextCardID() {
         return this.nextCardID;
+    }
+
+    public List<Deck> getUserDeckList() {
+        return this.deckList;
     }
 
     public List<String> getUserFriendList() {
