@@ -9,6 +9,7 @@ public class User {
     private String password;
     private List<Card> cardList;
     private String nextCardID;
+    private int userHighScore;
     private List<Deck> deckList;
     private List<String> friendList;
 
@@ -22,6 +23,7 @@ public class User {
         this.password = password;
         this.cardList = new ArrayList<>();
         this.nextCardID = "0001";
+        this.userHighScore = 0;
         this.deckList = new ArrayList<>();
         this.friendList = new ArrayList<>();
     }
@@ -46,6 +48,10 @@ public class User {
         return this.nextCardID;
     }
 
+    public int getUserHighScore() {
+        return this.userHighScore;
+    }
+
     public List<Deck> getUserDeckList() {
         return this.deckList;
     }
@@ -56,6 +62,10 @@ public class User {
 
     public void setUserUID(String userUID) {
         this.userUID = userUID;
+    }
+
+    public void setUserHighScore(int userHighScore) {
+        this.userHighScore = userHighScore;
     }
 
     public void addCardToList(Card card) {

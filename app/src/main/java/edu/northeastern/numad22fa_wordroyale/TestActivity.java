@@ -110,7 +110,7 @@ public class TestActivity extends AppCompatActivity {
 
                         //TODO: shuffle when shaking the phone
                         testScore = 0;
-                        cardPositionCursor = 1;
+                        cardPositionCursor = 0;
 
                         cardFront = testCardList.get(cardPositionCursor).getCardFront();
                         cardBack = testCardList.get(cardPositionCursor).getCardBack();
@@ -181,25 +181,49 @@ public class TestActivity extends AppCompatActivity {
     }
 
     public void nextQuestion() {
-        cardFront = testCardList.get(cardPositionCursor).getCardFront();
-        cardBack = testCardList.get(cardPositionCursor).getCardBack();
-        cardCreatorUID = testCardList.get(cardPositionCursor).getCardCreatorUID();
-        cardDifficulty = testCardList.get(cardPositionCursor).getCardDifficulty();
+        if (cardPositionCursor >= 30) {
+            rootRef.child("users")
+                    .child(userAuth.getCurrentUser().getUid())
+                    .child("userHighScore")
+                    .get().addOnCompleteListener(task -> {
+                                if (!task.isSuccessful()) {
+                                    Log.e(TAG, "Error getting data", task.getException());
+                                } else {
+                                    int pastHighScore = task.getResult().getValue(Integer.class);
+                                    if (testScore > pastHighScore) {
+                                        rootRef.child("users")
+                                                .child(userAuth.getCurrentUser().getUid())
+                                                .child("userHighScore")
+                                                .setValue(testScore);
+                                        Toast.makeText(TestActivity.this, "New High Score!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                    });
 
-        if (!isFront) {
-            textFrontAnimatorSet.setTarget(cardBackTV);
-            textBackAnimatorSet.setTarget(cardFrontTV);
-            textFrontAnimatorSet.start();
-            textBackAnimatorSet.start();
-            cardBackTV.setVisibility(View.GONE);
-            cardFrontTV.setVisibility(View.VISIBLE);
-            isFront = true;
+            Intent deckListActivityIntent = new Intent(this, DeckListActivity.class);
+            startActivity(deckListActivityIntent);
+            finish();
+        } else {
+            cardFront = testCardList.get(cardPositionCursor).getCardFront();
+            cardBack = testCardList.get(cardPositionCursor).getCardBack();
+            cardCreatorUID = testCardList.get(cardPositionCursor).getCardCreatorUID();
+            cardDifficulty = testCardList.get(cardPositionCursor).getCardDifficulty();
 
-            cardFrontTV.setText(cardFront);
-            cardBackTV.setText(cardBack);
-            cardDifficultyTV.setText("CARD DIFFICULTY: " + cardDifficulty);
-            cardDifficultyTV.setVisibility(View.GONE);
-            cardCreatorUIDTV.setText(cardCreatorUID);
+            if (!isFront) {
+                textFrontAnimatorSet.setTarget(cardBackTV);
+                textBackAnimatorSet.setTarget(cardFrontTV);
+                textFrontAnimatorSet.start();
+                textBackAnimatorSet.start();
+                cardBackTV.setVisibility(View.GONE);
+                cardFrontTV.setVisibility(View.VISIBLE);
+                isFront = true;
+
+                cardFrontTV.setText(cardFront);
+                cardBackTV.setText(cardBack);
+                cardDifficultyTV.setText("CARD DIFFICULTY: " + cardDifficulty);
+                cardDifficultyTV.setVisibility(View.GONE);
+                cardCreatorUIDTV.setText(cardCreatorUID);
+            }
         }
     }
 
