@@ -26,7 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class TestActivity extends AppCompatActivity {
     public static final String TAG = "TestActivity";
@@ -207,7 +206,7 @@ public class TestActivity extends AppCompatActivity {
         cardBackTV.setVisibility(View.GONE);
         cardBackTV.setCameraDistance(8000 * scale);
 
-        cardDifficultyTV.setText(("CARD DIFFICULTY: " + cardDifficulty));
+        cardDifficultyTV.setText(String.format(getResources().getString(R.string.card_card_difficulty_hint), cardDifficulty));
         cardDifficultyTV.setVisibility(View.GONE);
         cardCreatorUIDTV.setText(cardCreatorUID);
 
@@ -258,7 +257,7 @@ public class TestActivity extends AppCompatActivity {
 
                 cardFrontTV.setText(cardFront);
                 cardBackTV.setText(cardBack);
-                cardDifficultyTV.setText("CARD DIFFICULTY: " + cardDifficulty);
+                cardDifficultyTV.setText(String.format(getResources().getString(R.string.card_card_difficulty_hint), cardDifficulty));
                 cardDifficultyTV.setVisibility(View.GONE);
                 cardCreatorUIDTV.setText(cardCreatorUID);
             }

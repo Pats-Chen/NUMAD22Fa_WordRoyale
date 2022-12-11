@@ -135,7 +135,7 @@ public class DeckListActivity extends AppCompatActivity {
         protected void onBindViewHolder(@NonNull DeckListActivity.DeckViewHolder holder, int position, @NonNull Deck model) {
             holder.deckNameTV.setText(model.getDeckName());
             holder.deckCreatorUIDTV.setText(model.getDeckCreatorUID());
-            holder.deckSizeTV.setText(model.getDeckSize() + "/30");
+            holder.deckSizeTV.setText(String.format(getResources().getString(R.string.deck_list_deck_size_hint), model.getDeckSize()));
             holder.itemView.setOnClickListener(view -> {
                 Intent intent = new Intent(DeckListActivity.this, TestActivity.class);
                 Bundle deckListBundle = new Bundle();

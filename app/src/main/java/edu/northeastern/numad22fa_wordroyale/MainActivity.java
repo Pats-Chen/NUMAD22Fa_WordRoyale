@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
     private TextView userEmail;
     private TextView userUID;
+    private TextView userHighScore;
     private final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     private final FirebaseAuth userAuth = FirebaseAuth.getInstance();
 
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         }
         userEmail = findViewById(R.id.mainUserEmail);
         userUID = findViewById(R.id.mainUserUID);
+        userHighScore = findViewById(R.id.mainUserHighScore);
 
         DatabaseReference userRef = rootRef.child("users").child(userAuth.getCurrentUser().getUid());
         userRef.addValueEventListener(new ValueEventListener() {
@@ -42,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 if (user != null) {
-                    userEmail.setText("Email: " + user.getUserEmail());
-                    userUID.setText("UID: " + user.getUserUID());
+                    userEmail.setText(String.format(getResources().getString(R.string.main_user_email_hint), user.getUserEmail()));
+                    userUID.setText(String.format(getResources().getString(R.string.main_user_uid_hint), user.getUserUID()));
+                    userHighScore.setText(String.format(getResources().getString(R.string.main_user_high_score_hint), user.getUserHighScore()));
                 }
             }
 

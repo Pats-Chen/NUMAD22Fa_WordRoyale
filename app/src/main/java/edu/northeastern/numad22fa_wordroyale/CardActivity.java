@@ -72,7 +72,7 @@ public class CardActivity extends AppCompatActivity {
         cardBackTV.setText(cardBack);
 
         cardDifficultyTV = findViewById(R.id.cardTVCardDifficulty);
-        cardDifficultyTV.setText("CARD DIFFICULTY: " + cardDifficulty);
+        cardDifficultyTV.setText(String.format(getResources().getString(R.string.card_card_difficulty_hint), cardDifficulty));
         cardCreatorUIDTV = findViewById(R.id.cardTVCardCreatorUID);
         cardCreatorUIDTV.setText(cardCreatorUID);
 
