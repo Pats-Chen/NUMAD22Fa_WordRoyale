@@ -9,7 +9,7 @@ public class User {
     private String password;
     private List<Card> cardList;
     private String nextCardID;
-    private int userHighScore;
+    private Integer userHighScore;
     private List<Deck> deckList;
     private List<String> friendList;
 
@@ -48,7 +48,7 @@ public class User {
         return this.nextCardID;
     }
 
-    public int getUserHighScore() {
+    public Integer getUserHighScore() {
         return this.userHighScore;
     }
 

@@ -77,7 +77,7 @@ public class DeckListActivity extends AppCompatActivity {
 
     public void newDeckDialog(View v) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_select_deck, null);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_create_new_deck, null);
         dialogBuilder.setView(dialogView);
         dialogBuilder.setTitle("CREATE A NEW DECK!");
 

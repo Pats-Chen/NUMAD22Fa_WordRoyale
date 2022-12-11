@@ -189,7 +189,10 @@ public class TestActivity extends AppCompatActivity {
                                 if (!task.isSuccessful()) {
                                     Log.e(TAG, "Error getting data", task.getException());
                                 } else {
-                                    int pastHighScore = task.getResult().getValue(Integer.class);
+                                    Integer pastHighScore = task.getResult().getValue(Integer.class);
+                                    if (pastHighScore == null) {
+                                        Log.e(TAG, String.valueOf(pastHighScore));
+                                    }
                                     if (testScore > pastHighScore) {
                                         rootRef.child("users")
                                                 .child(userAuth.getCurrentUser().getUid())
@@ -202,7 +205,7 @@ public class TestActivity extends AppCompatActivity {
 
             Intent deckListActivityIntent = new Intent(this, DeckListActivity.class);
             startActivity(deckListActivityIntent);
-            finish();
+            super.onBackPressed();
         } else {
             cardFront = testCardList.get(cardPositionCursor).getCardFront();
             cardBack = testCardList.get(cardPositionCursor).getCardBack();
