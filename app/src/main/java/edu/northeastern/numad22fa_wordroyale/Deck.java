@@ -7,6 +7,7 @@ import java.util.List;
 public class Deck {
     private String deckName;
     private String deckCreatorUID;
+    private HashMap<String, Card> cardList;
     private long deckSize;
 
     public Deck() {
@@ -25,6 +26,10 @@ public class Deck {
 
     public String getDeckCreatorUID() {
         return this.deckCreatorUID;
+    }
+
+    public HashMap<String, Card> getCardList() {
+        return this.cardList;
     }
 
     public long getDeckSize() {

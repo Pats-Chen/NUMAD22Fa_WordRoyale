@@ -4,6 +4,7 @@
     package="edu.northeastern.numad22fa_wordroyale">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -17,6 +18,10 @@
 
         <activity
             android:name=".FriendListActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="false" />
+        <activity
+            android:name=".TestActivity"
             android:configChanges="orientation|screenSize"
             android:exported="false" />
         <activity

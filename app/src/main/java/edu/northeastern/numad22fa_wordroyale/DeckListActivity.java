@@ -77,7 +77,7 @@ public class DeckListActivity extends AppCompatActivity {
 
     public void newDeckDialog(View v) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_create_new_deck, null);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_select_deck, null);
         dialogBuilder.setView(dialogView);
         dialogBuilder.setTitle("CREATE A NEW DECK!");
 
@@ -139,15 +139,11 @@ public class DeckListActivity extends AppCompatActivity {
             holder.deckCreatorUIDTV.setText(model.getDeckCreatorUID());
             holder.deckSizeTV.setText(model.getDeckSize() + "/30");
             holder.itemView.setOnClickListener(view -> {
-                //TODO: Test Activity
-//                Intent intent = new Intent(context, CardActivity.class);
-//                Bundle cardBundle = new Bundle();
-//                cardBundle.putString("CARD ID", cardHashMap.get(position).getCardID());
-//                cardBundle.putString("CARD FRONT", cardHashMap.get(position).getCardFront());
-//                cardBundle.putString("CARD BACK", cardHashMap.get(position).getCardBack());
-//                cardBundle.putString("CARD DIFFICULTY", cardHashMap.get(position).getCardDifficulty());
-//                intent.putExtras(cardBundle);
-//                context.startActivity(intent);
+                Intent intent = new Intent(DeckListActivity.this, TestActivity.class);
+                Bundle deckListBundle = new Bundle();
+                deckListBundle.putString("DECK NAME", model.getDeckName());
+                intent.putExtras(deckListBundle);
+                DeckListActivity.this.startActivity(intent);
             });
         }
     }
