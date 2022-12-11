@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     private TextView userEmail;
-    private TextView password;
+    private TextView userUID;
     private final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     private final FirebaseAuth userAuth = FirebaseAuth.getInstance();
 
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         userEmail = findViewById(R.id.mainUserEmail);
-        password = findViewById(R.id.mainPassword);
+        userUID = findViewById(R.id.mainUserUID);
 
         DatabaseReference userRef = rootRef.child("users").child(userAuth.getCurrentUser().getUid());
         userRef.addValueEventListener(new ValueEventListener() {
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 User user = snapshot.getValue(User.class);
                 if (user != null) {
                     userEmail.setText("Email: " + user.getUserEmail());
-                    password.setText("Password: " + user.getPassword());
+                    userUID.setText("UID: " + user.getUserUID());
                 }
             }
 
@@ -61,11 +61,6 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    public void loginActivity(View v) {
-        Intent loginActivityIntent = new Intent(this, LoginActivity.class);
-        startActivity(loginActivityIntent);
-    }
-
     public void cardListActivity(View v) {
         Intent cardListActivityIntent = new Intent(this, CardListActivity.class);
         startActivity(cardListActivityIntent);
@@ -74,5 +69,10 @@ public class MainActivity extends AppCompatActivity {
     public void deckListActivity(View v) {
         Intent deckListActivityIntent = new Intent(this, DeckListActivity.class);
         startActivity(deckListActivityIntent);
+    }
+
+    public void friendListActivity(View v) {
+        Intent friendListActivityIntent = new Intent(this, FriendListActivity.class);
+        startActivity(friendListActivityIntent);
     }
 }
