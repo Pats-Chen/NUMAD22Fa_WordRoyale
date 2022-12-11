@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class TestActivity extends AppCompatActivity {
     public static final String TAG = "TestActivity";
@@ -50,9 +51,11 @@ public class TestActivity extends AppCompatActivity {
     private int testScore;
     private final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     private final FirebaseAuth userAuth = FirebaseAuth.getInstance();
-    private SensorManager sensorManager;
-    private Sensor sensor;
-    private SensorEventListener listener;
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private SensorEventListener mSensorEventListener;
+    private double accelerationCurrentValue;
+    private double accelerationPreviousValue;
     private boolean isRegisterSuccess;
     private boolean isShuffledFlag;
     private long lastTime;
@@ -87,6 +90,33 @@ public class TestActivity extends AppCompatActivity {
         textFrontAnimatorSet = new AnimatorSet();
         textBackAnimatorSet = new AnimatorSet();
 
+        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mSensorEventListener = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent sensorEvent) {
+                float x = sensorEvent.values[0];
+                float y = sensorEvent.values[1];
+                float z = sensorEvent.values[2];
+
+                accelerationCurrentValue = Math.sqrt((x * x + y * y + z * z));
+                double changeInAcceleration = Math.abs(accelerationCurrentValue - accelerationPreviousValue);
+                accelerationPreviousValue = accelerationCurrentValue;
+
+                if (changeInAcceleration > 5 && isShuffledFlag == false) {
+                    Collections.shuffle(testCardList, new Random(5));
+                    Toast.makeText(TestActivity.this, "Deck shuffled!", Toast.LENGTH_SHORT).show();
+                    isShuffledFlag = true;
+                    initialQuestion();
+                }
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int i) {
+
+            }
+        };
+
         rootRef.child("users")
                 .child(userAuth.getCurrentUser().getUid())
                 .child("deckList")
@@ -105,32 +135,16 @@ public class TestActivity extends AppCompatActivity {
 
                         if (testCardList.size() == 30) {
                             isShuffledFlag = false;
-                            Toast.makeText(TestActivity.this, "Shake your phone to shuffle the deck!", Toast.LENGTH_SHORT).show();
+                            mSensorManager.registerListener(mSensorEventListener, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+                            Toast.makeText(TestActivity.this, "Shake your phone to shuffle the deck in 3 seconds!", Toast.LENGTH_SHORT).show();
                         }
 
-                        //TODO: shuffle when shaking the phone
-                        testScore = 0;
-                        cardPositionCursor = 0;
+                        Handler handler = new Handler();
+                        handler.postDelayed(() -> {
+                            mSensorManager.unregisterListener(mSensorEventListener);
+                        }, 3000);
 
-                        cardFront = testCardList.get(cardPositionCursor).getCardFront();
-                        cardBack = testCardList.get(cardPositionCursor).getCardBack();
-                        cardCreatorUID = testCardList.get(cardPositionCursor).getCardCreatorUID();
-                        cardDifficulty = testCardList.get(cardPositionCursor).getCardDifficulty();
-
-                        cardFrontTV.setText(cardFront);
-                        cardFrontTV.setVisibility(View.VISIBLE);
-                        cardFrontTV.setCameraDistance(8000 * scale);
-
-                        cardBackTV.setText(cardBack);
-                        cardBackTV.setVisibility(View.GONE);
-                        cardBackTV.setCameraDistance(8000 * scale);
-
-                        cardDifficultyTV.setText(("CARD DIFFICULTY: " + cardDifficulty));
-                        cardDifficultyTV.setVisibility(View.GONE);
-                        cardCreatorUIDTV.setText(cardCreatorUID);
-
-                        textFrontAnimatorSet.play(AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.animator_card_flip_front));
-                        textBackAnimatorSet.play(AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.animator_card_flip_back));
+                        initialQuestion();
                     }
                 });
     }
@@ -178,6 +192,31 @@ public class TestActivity extends AppCompatActivity {
         dialogBuilder.setNegativeButton("CANCEL", (dialog, id) -> dialog.cancel());
 
         dialogBuilder.create().show();
+    }
+
+    public void initialQuestion() {
+        testScore = 0;
+        cardPositionCursor = 0;
+
+        cardFront = testCardList.get(cardPositionCursor).getCardFront();
+        cardBack = testCardList.get(cardPositionCursor).getCardBack();
+        cardCreatorUID = testCardList.get(cardPositionCursor).getCardCreatorUID();
+        cardDifficulty = testCardList.get(cardPositionCursor).getCardDifficulty();
+
+        cardFrontTV.setText(cardFront);
+        cardFrontTV.setVisibility(View.VISIBLE);
+        cardFrontTV.setCameraDistance(8000 * scale);
+
+        cardBackTV.setText(cardBack);
+        cardBackTV.setVisibility(View.GONE);
+        cardBackTV.setCameraDistance(8000 * scale);
+
+        cardDifficultyTV.setText(("CARD DIFFICULTY: " + cardDifficulty));
+        cardDifficultyTV.setVisibility(View.GONE);
+        cardCreatorUIDTV.setText(cardCreatorUID);
+
+        textFrontAnimatorSet.play(AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.animator_card_flip_front));
+        textBackAnimatorSet.play(AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.animator_card_flip_back));
     }
 
     public void nextQuestion() {
