@@ -112,6 +112,46 @@ public class FriendListActivity extends AppCompatActivity {
         }
     }
 
+    public void sendDeckToFriend(String friendUID) {
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_send_deck_to_friend, null);
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.setTitle("WRITE DOWN THE DECK NAME TO SEND IT!");
+
+        TextInputLayout selectDeckNameLayout = dialogView.findViewById(R.id.selectDeckNameInputLayout);
+
+        dialogBuilder.setPositiveButton("SEND", (dialog, id) -> {
+            String selectDeckName = selectDeckNameLayout.getEditText().getText().toString().trim();
+
+            saveDeckToFriendDatabase(friendUID, selectDeckName);
+        });
+
+        dialogBuilder.setNegativeButton("CANCEL", (dialog, id) -> dialog.cancel());
+
+        dialogBuilder.create().show();
+    }
+
+    public void saveDeckToFriendDatabase(String friendUID, String selectDeckName) {
+        rootRef.child("users")
+                .child(userAuth.getCurrentUser().getUid())
+                .child("deckList")
+                .child(selectDeckName)
+                .get().addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(FriendListActivity.this, "Failed to find the deck!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Deck selectedDeck = task.getResult().getValue(Deck.class);
+                        rootRef.child("users")
+                                .child(friendUID)
+                                .child("deckList")
+                                .child(selectedDeck.getDeckName())
+                                .setValue(selectedDeck);
+
+                        Toast.makeText(FriendListActivity.this, "Deck is sent successfully!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     public class FriendAdapter extends FirebaseRecyclerAdapter<String, FriendListActivity.FriendViewHolder> {
 
         public FriendAdapter(@NonNull FirebaseRecyclerOptions<String> options) {
@@ -129,18 +169,7 @@ public class FriendListActivity extends AppCompatActivity {
         @Override
         protected void onBindViewHolder(@NonNull FriendListActivity.FriendViewHolder holder, int position, @NonNull String model) {
             holder.friendUID.setText("FRIEND UID: " + model);
-            holder.itemView.setOnClickListener(view -> {
-                //TODO: send deck to friend
-//                Intent intent = new Intent(CardListActivity.this, CardActivity.class);
-//                Bundle cardBundle = new Bundle();
-//                cardBundle.putString("CARD ID", model.getCardID());
-//                cardBundle.putString("CARD FRONT", model.getCardFront());
-//                cardBundle.putString("CARD BACK", model.getCardBack());
-//                cardBundle.putString("CARD DIFFICULTY", model.getCardDifficulty());
-//                cardBundle.putString("CARD CREATOR UID", model.getCardCreatorUID());
-//                intent.putExtras(cardBundle);
-//                CardListActivity.this.startActivity(intent);
-            });
+            holder.itemView.setOnClickListener(view -> sendDeckToFriend(model));
         }
     }
 

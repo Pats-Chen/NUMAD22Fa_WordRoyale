@@ -1,41 +1,27 @@
 package edu.northeastern.numad22fa_wordroyale;
 
 import android.app.AlertDialog;
-
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.material.textfield.TextInputEditText;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.zip.Inflater;
 
 public class CardListActivity extends AppCompatActivity {
     public static final String TAG = "CardListActivity";
@@ -60,25 +46,6 @@ public class CardListActivity extends AppCompatActivity {
                 .setQuery(rootRef.child("users").child(userAuth.getCurrentUser().getUid()).child("cardList"), Card.class)
                 .build();
         cardListAdapter = new CardAdapter(options);
-
-//        cardListAdapter = new CardAdapter(this, cardList);
-//        rootRef.child("users")
-//                .child(userAuth.getCurrentUser().getUid())
-//                .child("cardList").addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                            Card card = dataSnapshot.getValue(Card.class);
-//                            cardList.add(card);
-//                        }
-//                        cardListAdapter.notifyDataSetChanged();
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
 
         cardListRV = findViewById(R.id.cardListRV);
         cardListRV.setHasFixedSize(true);

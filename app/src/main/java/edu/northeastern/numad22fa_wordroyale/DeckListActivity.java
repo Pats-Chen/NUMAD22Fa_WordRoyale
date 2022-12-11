@@ -1,8 +1,6 @@
 package edu.northeastern.numad22fa_wordroyale;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,17 +18,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class DeckListActivity extends AppCompatActivity {
     public static final String TAG = "DeckListActivity";
@@ -102,21 +96,25 @@ public class DeckListActivity extends AppCompatActivity {
     public void saveNewDeckToDatabase(String newDeckName) {
         Deck newDeck = new Deck(newDeckName);
         newDeck.setDeckCreatorUID(userAuth.getCurrentUser().getUid());
-        //TODO: check if deck name is used.
+
         rootRef.child("users")
                 .child(userAuth.getCurrentUser().getUid())
-                .child("deckList")
-                .child(newDeckName)
-                .setValue(newDeck);
-//            rootRef.child("users")
-//                    .child(userAuth.getCurrentUser().getUid())
-//                    .child("deckList")
-//                    .child(newDeckName)
-//                    .child("cardList")
-//                    .child("0000")
-//                    .setValue(new Card("0000", "PLACEHOLDER", "PLACEHOLDER"));
-
-        Toast.makeText(DeckListActivity.this, "Deck created successfully!", Toast.LENGTH_SHORT).show();
+                .child("deckList").get().addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.e(TAG, "Error getting data", task.getException());
+                    } else {
+                        if (task.getResult().hasChild(newDeckName)) {
+                            Toast.makeText(DeckListActivity.this, "This deck is already created!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            rootRef.child("users")
+                                    .child(userAuth.getCurrentUser().getUid())
+                                    .child("deckList")
+                                    .child(newDeckName)
+                                    .setValue(newDeck);
+                            Toast.makeText(DeckListActivity.this, "Deck created successfully!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     public class DeckAdapter extends FirebaseRecyclerAdapter<Deck, DeckListActivity.DeckViewHolder> {

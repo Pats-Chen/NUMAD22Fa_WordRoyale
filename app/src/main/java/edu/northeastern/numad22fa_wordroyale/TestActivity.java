@@ -3,7 +3,6 @@ package edu.northeastern.numad22fa_wordroyale;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -26,7 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -56,14 +54,7 @@ public class TestActivity extends AppCompatActivity {
     private SensorEventListener mSensorEventListener;
     private double accelerationCurrentValue;
     private double accelerationPreviousValue;
-    private boolean isRegisterSuccess;
     private boolean isShuffledFlag;
-    private long lastTime;
-    private long timeInterval;
-    private boolean isInitPosition = false;
-    private float lastX;
-    private float lastY;
-    private float lastZ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,11 +95,16 @@ public class TestActivity extends AppCompatActivity {
                 accelerationPreviousValue = accelerationCurrentValue;
 
                 if (changeInAcceleration > 5 && isShuffledFlag == false) {
-                    Collections.shuffle(testCardList, new Random(5));
+                    Log.e(TAG, testCardList.get(0).getCardFront());
+                    Collections.shuffle(testCardList);
                     Toast.makeText(TestActivity.this, "Deck shuffled!", Toast.LENGTH_SHORT).show();
                     isShuffledFlag = true;
-                    initialQuestion();
+                    Log.e(TAG, testCardList.get(0).getCardFront());
                 }
+
+                Handler handler = new Handler();
+                handler.postDelayed(() -> initializeQuestion(), 1000);
+
             }
 
             @Override
@@ -144,7 +140,7 @@ public class TestActivity extends AppCompatActivity {
                             mSensorManager.unregisterListener(mSensorEventListener);
                         }, 3000);
 
-                        initialQuestion();
+                        initializeQuestion();
                     }
                 });
     }
@@ -194,7 +190,7 @@ public class TestActivity extends AppCompatActivity {
         dialogBuilder.create().show();
     }
 
-    public void initialQuestion() {
+    public void initializeQuestion() {
         testScore = 0;
         cardPositionCursor = 0;
 

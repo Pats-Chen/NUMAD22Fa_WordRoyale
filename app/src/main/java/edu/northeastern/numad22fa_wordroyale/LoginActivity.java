@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,19 +14,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Objects;
 
-
 public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LoginActivity";
     private TextInputLayout loginTextUserEmail;
     private TextInputLayout loginTextPassword;
-    private Button loginButtonLogin;
-    private Button loginButtonSignup;
     private final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     private final FirebaseAuth userAuth = FirebaseAuth.getInstance();
 
@@ -38,19 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginTextUserEmail = findViewById(R.id.loginTextUserEmail);
         loginTextPassword = findViewById(R.id.loginTextPassword);
-        loginButtonLogin = findViewById(R.id.loginButtonLogin);
-        loginButtonSignup = findViewById(R.id.loginButtonSignup);
     }
-
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        if(userAuth.getCurrentUser() != null){
-//            finish();
-//            return;
-//        }
-//    }
-//
 
     public void signup(View v) {
         String userEmail = Objects.requireNonNull(loginTextUserEmail.getEditText()).getText().toString();
@@ -76,28 +59,24 @@ public class LoginActivity extends AppCompatActivity {
                                         }
                                     });
                         } else {
-                            // TODO: prompt user already exists.
+                            switch (task.getException().getMessage()) {
+                                case "The email address is already in use by another account.":
+                                    Toast.makeText(LoginActivity.this, "Email is used!", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case "The email address is badly formatted.":
+                                    Toast.makeText(LoginActivity.this, "Incorrect Email address!", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case "The given password is invalid. [ Password should be at least 6 characters ]":
+                                    Toast.makeText(LoginActivity.this, "Password should be at least 6 characters.", Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
                             Log.e(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed. Password should be at least 6 characters.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-//        rootRef.child("users").child("000000").child("nextUserID").get().addOnCompleteListener(task -> {
-//            if (!task.isSuccessful()) {
-//                Log.e(TAG, "Error getting data", task.getException());
-//            } else {
-//                Log.d(TAG, String.valueOf(task.getResult().getValue()));
-//                String newUserID = String.valueOf(task.getResult().getValue());
-
-//                User newUser = new User(newUserID, userEmail, password);
-//                rootRef.child("users").child(newUserID).setValue(newUser);
-
-//                int newUserIDPlus = Integer.parseInt(newUserID) + 1;
-//                String newUserIDPlusStr = Integer.toString(newUserIDPlus);
-//                String nextUserID = String.format("%1$" + 6 + "s", newUserIDPlusStr).replace(' ', '0');
-//                rootRef.child("users").child("000000").child("nextUserID").setValue(nextUserID);
-//            }
-//        });
     }
 
     public void login(View v) {
@@ -113,9 +92,18 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Authentication succeeded.", Toast.LENGTH_SHORT).show();
                             showMainActivity();
                         } else {
-                            // TODO: prompt password failure or user does not exist.
+                            switch (task.getException().getMessage()) {
+                                case "The password is invalid or the user does not have a password.":
+                                    Toast.makeText(LoginActivity.this, "Wrong password!", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case "There is no user record corresponding to this identifier. The user may have been deleted.":
+                                    Toast.makeText(LoginActivity.this, "User does not exist!", Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
                             Log.e(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
