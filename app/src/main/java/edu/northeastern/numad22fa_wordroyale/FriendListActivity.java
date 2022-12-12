@@ -141,13 +141,17 @@ public class FriendListActivity extends AppCompatActivity {
                         Toast.makeText(FriendListActivity.this, "Failed to find the deck!", Toast.LENGTH_SHORT).show();
                     } else {
                         Deck selectedDeck = task.getResult().getValue(Deck.class);
-                        rootRef.child("users")
-                                .child(friendUID)
-                                .child("deckList")
-                                .child(selectedDeck.getDeckName())
-                                .setValue(selectedDeck);
 
-                        Toast.makeText(FriendListActivity.this, "Deck is sent successfully!", Toast.LENGTH_SHORT).show();
+                        if (selectedDeck.getDeckSize() != 30) {
+                            Toast.makeText(FriendListActivity.this, "Only full decks can be sent to friends!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            rootRef.child("users")
+                                    .child(friendUID)
+                                    .child("deckList")
+                                    .child(selectedDeck.getDeckName())
+                                    .setValue(selectedDeck);
+                            Toast.makeText(FriendListActivity.this, "Deck is sent successfully!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }

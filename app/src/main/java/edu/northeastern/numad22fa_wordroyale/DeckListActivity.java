@@ -137,11 +137,28 @@ public class DeckListActivity extends AppCompatActivity {
             holder.deckCreatorUIDTV.setText(model.getDeckCreatorUID());
             holder.deckSizeTV.setText(String.format(getResources().getString(R.string.deck_list_deck_size_hint), model.getDeckSize()));
             holder.itemView.setOnClickListener(view -> {
-                Intent intent = new Intent(DeckListActivity.this, TestActivity.class);
-                Bundle deckListBundle = new Bundle();
-                deckListBundle.putString("DECK NAME", model.getDeckName());
-                intent.putExtras(deckListBundle);
-                DeckListActivity.this.startActivity(intent);
+                rootRef.child("users")
+                        .child(userAuth.getCurrentUser().getUid())
+                        .child("deckList")
+                        .child(model.getDeckName())
+                        .child("deckSize")
+                        .get().addOnCompleteListener(task -> {
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(DeckListActivity.this, "Failed to find the deck!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Integer selectedDeckSize = task.getResult().getValue(Integer.class);
+
+                                if (selectedDeckSize != 30) {
+                                    Toast.makeText(DeckListActivity.this, "Only full decks can be used to play!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Intent intent = new Intent(DeckListActivity.this, TestActivity.class);
+                                    Bundle deckListBundle = new Bundle();
+                                    deckListBundle.putString("DECK NAME", model.getDeckName());
+                                    intent.putExtras(deckListBundle);
+                                    DeckListActivity.this.startActivity(intent);
+                                }
+                            }
+                        });
             });
         }
     }
