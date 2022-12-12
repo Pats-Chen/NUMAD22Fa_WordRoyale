@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NUMAD22Fa_WordRoyale</string>
+    <string name="app_name">WordRoyale_NUMAD22Fa</string>
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
     <string name="login_button_login">LOGIN</string>

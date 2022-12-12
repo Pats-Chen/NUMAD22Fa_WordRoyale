@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2585" />
+        <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2585" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/drawable/ic_login_password.xml" value="0.2585" />
+        <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/drawable/ic_login_username.xml" value="0.2585" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_card.xml" value="0.286231884057971" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_card_front.xml" value="0.286231884057971" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_card_full.xml" value="0.286231884057971" />
@@ -23,6 +26,7 @@
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/dialog_input_answer.xml" value="0.35989583333333336" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/dialog_select_deck.xml" value="0.35885416666666664" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/dialog_send_deck_to_friend.xml" value="0.35989583333333336" />
+        <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2585" />
       </map>
     </option>
   </component>

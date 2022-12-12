@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
     android:padding="20dp"
     tools:context=".CardActivity" >
 
@@ -18,71 +17,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="350dp"
-            android:layout_height="500dp"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="8dp">
-
-            <TextView
-                android:id="@+id/cardTVCardFront"
-                android:layout_width="350dp"
-                android:layout_height="500dp"
-                android:background="@color/design_default_color_primary"
-                android:gravity="center"
-                android:onClick="cardFrontToBack"
-                android:text="@string/card_card_front"
-                android:textAlignment="center"
-                android:textColor="#000000"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/cardTVCardBack"
-                android:layout_width="350dp"
-                android:layout_height="500dp"
-
-                android:background="@color/design_default_color_secondary"
-                android:gravity="center"
-                android:onClick="cardBackToFront"
-                android:text="@string/card_card_back"
-                android:textAlignment="center"
-                android:textColor="#000000"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.cardview.widget.CardView>
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/cardTVCardDifficulty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CARD DIFFICULTY: -"
-                android:textAlignment="center"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/cardTVCardCreatorUIDHint"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/cardTVCardCreatorUIDHint"
@@ -96,7 +37,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/cardTVCardCreatorUID"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardTVCardDifficulty" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/cardTVCardCreatorUID"
@@ -107,22 +48,76 @@
                 android:textColor="#000000"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/cardTVCardDifficulty"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardTVCardCreatorUIDHint" />
+
+            <TextView
+                android:id="@+id/cardTVCardDifficulty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CARD DIFFICULTY: -"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardTVCardCreatorUID" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="350dp"
+            android:layout_height="500dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp">
+
+            <TextView
+                android:id="@+id/cardTVCardFront"
+                android:layout_width="350dp"
+                android:layout_height="500dp"
+                android:background="#6A4C9C"
+                android:gravity="center"
+                android:onClick="cardFlip"
+                android:text="@string/card_card_front"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/cardTVCardBack"
+                android:layout_width="350dp"
+                android:layout_height="500dp"
+                android:background="#268785"
+                android:gravity="center"
+                android:text="@string/card_card_back"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.cardview.widget.CardView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="10dp">
+            android:layout_height="70dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/addToDeckButtonCard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
                 android:onClick="addCardToDeck"
                 android:text="ADD TO DECK"
                 android:textStyle="bold"
@@ -131,7 +126,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 

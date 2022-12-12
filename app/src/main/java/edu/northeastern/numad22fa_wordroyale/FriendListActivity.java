@@ -168,7 +168,7 @@ public class FriendListActivity extends AppCompatActivity {
 
         @Override
         protected void onBindViewHolder(@NonNull FriendListActivity.FriendViewHolder holder, int position, @NonNull String model) {
-            holder.friendUID.setText(String.format(getResources().getString(R.string.friend_list_friend_uid_hint), model));
+            holder.friendUID.setText(model);
             holder.itemView.setOnClickListener(view -> sendDeckToFriend(model));
         }
     }

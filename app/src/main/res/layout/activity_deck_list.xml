@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     tools:context=".DeckListActivity" >
 
     <LinearLayout
@@ -17,6 +18,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp" >
+
+            <TextView
+                android:id="@+id/deckListAbout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="USER DECK LIST"
+                android:textColor="#000000"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <LinearLayout
             android:id="@+id/deckListRVLayout"
             android:layout_width="match_parent"
@@ -26,27 +45,28 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/deckListRV"
-                android:layout_width="match_parent"
-                android:layout_height="350dp" />
+                android:layout_width="350dp"
+                android:layout_height="500dp" />
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/deckListButtonLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="70dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/newDeckButtonDeckListActivity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
                 android:onClick="newDeckDialog"
                 android:text="NEW DECK"
                 android:textStyle="bold"
-                app:cornerRadius="15dp" />
-        </LinearLayout>
+                app:cornerRadius="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

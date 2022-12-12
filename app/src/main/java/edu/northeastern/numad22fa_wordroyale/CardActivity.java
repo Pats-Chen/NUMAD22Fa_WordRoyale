@@ -62,12 +62,12 @@ public class CardActivity extends AppCompatActivity {
         isFront = true;
         scale = getApplicationContext().getResources().getDisplayMetrics().density;
         cardFrontTV = findViewById(R.id.cardTVCardFront);
-        cardFrontTV.setVisibility(View.VISIBLE);
+        cardFrontTV.setAlpha(1);
         cardFrontTV.setCameraDistance(8000 * scale);
         cardFrontTV.setText(cardFront);
 
         cardBackTV = findViewById(R.id.cardTVCardBack);
-        cardBackTV.setVisibility(View.GONE);
+        cardBackTV.setAlpha(0);
         cardBackTV.setCameraDistance(8000 * scale);
         cardBackTV.setText(cardBack);
 
@@ -82,26 +82,22 @@ public class CardActivity extends AppCompatActivity {
         textBackAnimatorSet.play(AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.animator_card_flip_back));
     }
 
-    public void cardFrontToBack(View v) {
+    public void cardFlip(View v) {
         if (isFront) {
             textFrontAnimatorSet.setTarget(cardFrontTV);
             textBackAnimatorSet.setTarget(cardBackTV);
             textFrontAnimatorSet.start();
             textBackAnimatorSet.start();
-            cardFrontTV.setVisibility(View.GONE);
-            cardBackTV.setVisibility(View.VISIBLE);
+            cardFrontTV.setAlpha(0);
+            cardBackTV.setAlpha(1);
             isFront = false;
-        }
-    }
-
-    public void cardBackToFront(View v) {
-        if (!isFront) {
+        } else {
             textFrontAnimatorSet.setTarget(cardBackTV);
             textBackAnimatorSet.setTarget(cardFrontTV);
             textFrontAnimatorSet.start();
             textBackAnimatorSet.start();
-            cardBackTV.setVisibility(View.GONE);
-            cardFrontTV.setVisibility(View.VISIBLE);
+            cardBackTV.setAlpha(0);
+            cardFrontTV.setAlpha(1);
             isFront = true;
         }
     }
@@ -142,33 +138,48 @@ public class CardActivity extends AppCompatActivity {
                                         .child(userAuth.getCurrentUser().getUid())
                                         .child("deckList")
                                         .child(selectedDeckName)
-                                        .child("cardList")
-                                        .child(thisCard.getCardID())
-                                        .setValue(thisCard);
-
-                                rootRef.child("users")
-                                        .child(userAuth.getCurrentUser().getUid())
-                                        .child("deckList")
-                                        .child(selectedDeckName)
                                         .child("deckSize")
-                                        .get().addOnCompleteListener(task -> {
-                                            if (!task.isSuccessful()) {
-                                                Log.e(TAG, "Error getting data", task.getException());
+                                        .get().addOnCompleteListener(taskDeckSize -> {
+                                            if (!taskDeckSize.isSuccessful()) {
+                                                Toast.makeText(CardActivity.this, "Failed to find the deck size!", Toast.LENGTH_SHORT).show();
                                             } else {
-                                                Log.d(TAG, String.valueOf(task.getResult().getValue()));
-                                                Long deckSize = (Long) task.getResult().getValue();
+                                                Integer selectedDeckSize = taskDeckSize.getResult().getValue(Integer.class);
 
+                                                if (selectedDeckSize >= 30) {
+                                                    Toast.makeText(CardActivity.this, "Decks can not have more than 30 cards!", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    rootRef.child("users")
+                                                            .child(userAuth.getCurrentUser().getUid())
+                                                            .child("deckList")
+                                                            .child(selectedDeckName)
+                                                            .child("cardList")
+                                                            .child(thisCard.getCardID())
+                                                            .setValue(thisCard);
 
-                                                rootRef.child("users")
-                                                        .child(userAuth.getCurrentUser().getUid())
-                                                        .child("deckList")
-                                                        .child(selectedDeckName)
-                                                        .child("deckSize")
-                                                        .setValue(deckSize + 1);
+                                                    rootRef.child("users")
+                                                            .child(userAuth.getCurrentUser().getUid())
+                                                            .child("deckList")
+                                                            .child(selectedDeckName)
+                                                            .child("deckSize")
+                                                            .get().addOnCompleteListener(task -> {
+                                                                if (!task.isSuccessful()) {
+                                                                    Log.e(TAG, "Error getting data", task.getException());
+                                                                } else {
+                                                                    Log.d(TAG, String.valueOf(task.getResult().getValue()));
+                                                                    Long deckSize = (Long) task.getResult().getValue();
+
+                                                                    rootRef.child("users")
+                                                                            .child(userAuth.getCurrentUser().getUid())
+                                                                            .child("deckList")
+                                                                            .child(selectedDeckName)
+                                                                            .child("deckSize")
+                                                                            .setValue(deckSize + 1);
+                                                                }
+                                                            });
+                                                    Toast.makeText(CardActivity.this, "Card added successfully!", Toast.LENGTH_SHORT).show();
+                                                }
                                             }
                                         });
-
-                                Toast.makeText(CardActivity.this, "Card added successfully!", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             Toast.makeText(CardActivity.this, "This deck does not exist!", Toast.LENGTH_SHORT).show();

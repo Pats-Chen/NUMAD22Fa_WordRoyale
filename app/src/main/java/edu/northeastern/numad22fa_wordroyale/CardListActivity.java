@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -111,6 +112,7 @@ public class CardListActivity extends AppCompatActivity {
                             rootRef.child("users")
                                     .child(userAuth.getCurrentUser().getUid())
                                     .child("nextCardID").setValue(nextCardID);
+                            Toast.makeText(CardListActivity.this, "Card created successfully!", Toast.LENGTH_SHORT).show();
                         }
                     });
         } else {

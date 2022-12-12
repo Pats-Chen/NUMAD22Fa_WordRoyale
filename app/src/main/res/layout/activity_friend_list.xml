@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     tools:context=".FriendListActivity" >
 
     <LinearLayout
@@ -17,6 +18,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp" >
+
+            <TextView
+                android:id="@+id/friendListAbout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="USER FRIEND LIST"
+                android:textColor="#000000"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <LinearLayout
             android:id="@+id/friendListRVLayout"
             android:layout_width="match_parent"
@@ -26,16 +45,14 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/friendListRV"
-                android:layout_width="match_parent"
-                android:layout_height="350dp" />
+                android:layout_width="350dp"
+                android:layout_height="500dp" />
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/friendListButtonLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="70dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/addFriendButtonFriendListActivity"
@@ -46,11 +63,11 @@
                 android:text="ADD NEW FRIEND"
                 android:textStyle="bold"
                 app:cornerRadius="15dp"
-                app:layout_constraintBottom_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent" />
-        </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

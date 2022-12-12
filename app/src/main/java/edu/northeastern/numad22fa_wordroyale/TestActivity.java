@@ -164,15 +164,15 @@ public class TestActivity extends AppCompatActivity {
                     }
                 }
                 cardPositionCursor += 1;
-                cardDifficultyTV.setVisibility(View.VISIBLE);
+                cardDifficultyTV.setAlpha(1);
 
                 if (isFront) {
                     textFrontAnimatorSet.setTarget(cardFrontTV);
                     textBackAnimatorSet.setTarget(cardBackTV);
                     textFrontAnimatorSet.start();
                     textBackAnimatorSet.start();
-                    cardFrontTV.setVisibility(View.GONE);
-                    cardBackTV.setVisibility(View.VISIBLE);
+                    cardFrontTV.setAlpha(0);
+                    cardBackTV.setAlpha(1);
                     isFront = false;
                 }
 
@@ -199,15 +199,15 @@ public class TestActivity extends AppCompatActivity {
         cardDifficulty = testCardList.get(cardPositionCursor).getCardDifficulty();
 
         cardFrontTV.setText(cardFront);
-        cardFrontTV.setVisibility(View.VISIBLE);
+        cardFrontTV.setAlpha(1);
         cardFrontTV.setCameraDistance(8000 * scale);
 
         cardBackTV.setText(cardBack);
-        cardBackTV.setVisibility(View.GONE);
+        cardBackTV.setAlpha(0);
         cardBackTV.setCameraDistance(8000 * scale);
 
         cardDifficultyTV.setText(String.format(getResources().getString(R.string.card_card_difficulty_hint), cardDifficulty));
-        cardDifficultyTV.setVisibility(View.GONE);
+        cardDifficultyTV.setAlpha(0);
         cardCreatorUIDTV.setText(cardCreatorUID);
 
         textFrontAnimatorSet.play(AnimatorInflater.loadAnimator(getApplicationContext(), R.animator.animator_card_flip_front));
@@ -251,14 +251,14 @@ public class TestActivity extends AppCompatActivity {
                 textBackAnimatorSet.setTarget(cardFrontTV);
                 textFrontAnimatorSet.start();
                 textBackAnimatorSet.start();
-                cardBackTV.setVisibility(View.GONE);
-                cardFrontTV.setVisibility(View.VISIBLE);
+                cardBackTV.setAlpha(0);
+                cardFrontTV.setAlpha(1);
                 isFront = true;
 
                 cardFrontTV.setText(cardFront);
                 cardBackTV.setText(cardBack);
                 cardDifficultyTV.setText(String.format(getResources().getString(R.string.card_card_difficulty_hint), cardDifficulty));
-                cardDifficultyTV.setVisibility(View.GONE);
+                cardDifficultyTV.setAlpha(0);
                 cardCreatorUIDTV.setText(cardCreatorUID);
             }
         }
@@ -272,15 +272,15 @@ public class TestActivity extends AppCompatActivity {
     }
 
     public void revealAnswer() {
-        cardDifficultyTV.setVisibility(View.VISIBLE);
+        cardDifficultyTV.setAlpha(1);
         cardPositionCursor += 1;
         if (isFront) {
             textFrontAnimatorSet.setTarget(cardFrontTV);
             textBackAnimatorSet.setTarget(cardBackTV);
             textFrontAnimatorSet.start();
             textBackAnimatorSet.start();
-            cardFrontTV.setVisibility(View.GONE);
-            cardBackTV.setVisibility(View.VISIBLE);
+            cardFrontTV.setAlpha(0);
+            cardBackTV.setAlpha(1);
             isFront = false;
         }
     }

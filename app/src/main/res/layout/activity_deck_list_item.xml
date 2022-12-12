@@ -8,9 +8,9 @@
     app:cardCornerRadius="8dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:background="#113285"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -20,10 +20,19 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/deckListItemNameHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NAME: "
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/deckListItemName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DECK NAME"
+                android:textColor="#FFFFFF"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -32,12 +41,22 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/deckListItemCreatorUIDHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CREATOR UID: "
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/deckListItemCreatorUID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="DECK CREATOR UID"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -48,10 +67,19 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/deckListItemSizeHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SIZE: "
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/deckListItemSize"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="30/30"
+                android:textColor="#FFFFFF"
                 android:textStyle="bold" />
 
         </LinearLayout>
