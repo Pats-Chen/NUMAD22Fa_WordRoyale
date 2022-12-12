@@ -7,10 +7,10 @@
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2585" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/drawable/ic_login_password.xml" value="0.2585" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/drawable/ic_login_username.xml" value="0.2585" />
-        <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_card.xml" value="0.286231884057971" />
+        <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_card.xml" value="0.4466666666666667" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_card_front.xml" value="0.286231884057971" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_card_full.xml" value="0.286231884057971" />
-        <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_card_list.xml" value="0.286231884057971" />
+        <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_card_list.xml" value="0.22" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_card_list_item.xml" value="0.4528178243774574" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_card_test.xml" value="0.286231884057971" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_deck_list.xml" value="0.21584699453551912" />
@@ -18,7 +18,7 @@
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_friend_list.xml" value="0.286231884057971" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_friend_list_item.xml" value="0.286231884057971" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_login.xml" value="0.286231884057971" />
-        <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_main.xml" value="0.286231884057971" />
+        <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_main.xml" value="0.3333333333333333" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/activity_test.xml" value="0.35885416666666664" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/dialog_add_new_friend.xml" value="0.35885416666666664" />
         <entry key="..\:/PATS-PC/AndroidStudioProjects/NUMAD22Fa_WordRoyale/app/src/main/res/layout/dialog_create_new_card.xml" value="0.286231884057971" />

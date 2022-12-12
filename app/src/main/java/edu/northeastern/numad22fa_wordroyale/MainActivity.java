@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
                 if (user != null) {
-                    userEmail.setText(String.format(getResources().getString(R.string.main_user_email_hint), user.getUserEmail()));
-                    userUID.setText(String.format(getResources().getString(R.string.main_user_uid_hint), user.getUserUID()));
-                    userHighScore.setText(String.format(getResources().getString(R.string.main_user_high_score_hint), user.getUserHighScore()));
+                    userEmail.setText(user.getUserEmail());
+                    userUID.setText(user.getUserUID());
+                    userHighScore.setText(String.valueOf(user.getUserHighScore()));
                 }
             }
 

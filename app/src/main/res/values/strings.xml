@@ -5,8 +5,14 @@
     <string name="login_button_login">LOGIN</string>
     <string name="login_button_signup">SIGN UP</string>
     <string name="card_card_difficulty_hint">CARD DIFFICULTY: %1$s</string>
+    <string name="card_card_difficulty_default">CARD DIFFICULTY: -</string>
+    <string name="card_card_creator_uid_hint">CARD CREATOR UID:</string>
+    <string name="card_card_creator_uid_default">CARD CREATOR UID</string>
+    <string name="card_button_add_to_deck">ADD TO DECK</string>
     <string name="card_card_front">CARD FRONT</string>
     <string name="card_card_back">CARD BACK</string>
+    <string name="card_list_about">USER CARD LIST</string>
+    <string name="card_list_button_new_card">NEW CARD</string>
     <string name="deck_list_deck_size_hint">%1$d/30</string>
     <string name="friend_list_friend_uid_hint">FRIEND UID: %1$s</string>
     <string name="main_user_email_hint">Email: %1$s</string>

@@ -7,112 +7,192 @@
     android:padding="20dp"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/mainAbout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Welcome to Word Royale!"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold"
+    <LinearLayout
+        android:id="@+id/cardListLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/mainUserEmail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/mainUserEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email: -"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/mainAbout"
-        app:layout_constraintBottom_toTopOf="@+id/mainUserUID"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/mainUserUID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="UID: -"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/mainUserEmail"
-        app:layout_constraintBottom_toTopOf="@+id/mainUserHighScore"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/mainUserHighScore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="High Score: -"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/mainUserUID"
-        app:layout_constraintBottom_toTopOf="@+id/mainButtonCardListActivity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/mainButtonCardListActivity"
-        android:text="CARD LIST ACTIVITY"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:onClick="cardListActivity"
-        app:layout_constraintTop_toBottomOf="@+id/mainUserHighScore"
-        app:layout_constraintBottom_toTopOf="@+id/mainButtonDeckListActivity"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:cornerRadius="15dp" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/mainButtonDeckListActivity"
-        android:text="DECK LIST ACTIVITY"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:onClick="deckListActivity"
-        app:layout_constraintTop_toBottomOf="@+id/mainButtonCardListActivity"
-        app:layout_constraintBottom_toTopOf="@+id/mainButtonFriendListActivity"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:cornerRadius="15dp" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/mainButtonFriendListActivity"
-        android:text="FRIEND LIST ACTIVITY"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:onClick="friendListActivity"
-        app:layout_constraintTop_toBottomOf="@+id/mainButtonDeckListActivity"
-        app:layout_constraintBottom_toTopOf="@+id/mainButtonLogout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:cornerRadius="15dp" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/mainButtonLogout"
-        android:text="LOG OUT"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:onClick="logout"
-        app:layout_constraintTop_toBottomOf="@+id/mainButtonFriendListActivity"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:cornerRadius="15dp" />
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp" >
+
+            <TextView
+                android:id="@+id/mainAbout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Welcome to Word Royale!"
+                android:textColor="#113285"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="#113285"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/mainUserEmailHint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Email: "
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/mainUserEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EMAIL"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/mainUserUIDHint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="UID: "
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/mainUserUID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="UID"
+                        android:textColor="#FFFFFF"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/mainUserHighScoreHint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="High Score: "
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/mainUserHighScore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="HIGH SCORE"
+                        android:textColor="#FFFFFF"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="370dp"
+            android:rowCount="2"
+            android:columnCount="2">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mainButtonCardListActivity"
+                android:text="CARD LIST"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="4dp"
+                android:onClick="cardListActivity"
+                app:cornerRadius="15dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mainButtonDeckListActivity"
+                android:text="DECK LIST"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="8dp"
+                android:onClick="deckListActivity"
+                app:cornerRadius="15dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mainButtonFriendListActivity"
+                android:text="FRIEND LIST"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="4dp"
+                android:onClick="friendListActivity"
+                app:cornerRadius="15dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mainButtonLogout"
+                android:text="LOG OUT"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="8dp"
+                android:onClick="logout"
+                app:cornerRadius="15dp" />
+        </GridLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
